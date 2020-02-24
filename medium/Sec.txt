@@ -1,0 +1,7 @@
+En todos los forms tenemos validaciones de los inputs de los usuarios
+Evitamos el CSRF con el CSRF token
+SQLLite para desarrollo y Postgress para producción
+Trabajo con git y entornos virtuales
+Variable lazy en relaciones base de datos
+-Checquear el tamaño de un titulo en el post(100)
+-Ver en el email, si no comprobamos el tam, y introducimos mas de 100 caracteres ver si hay overflow

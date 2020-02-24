@@ -1,0 +1,18 @@
+.content-section {
+    background: #ecebeb;
+    padding: 10px 20px;
+    border: 1px solid #f5f5f5;
+    border-radius: 3px;
+    margin-bottom: 20px;
+    margin-top: 10px;
+  }
+
+body {
+    background-color: #fbfbfb;
+    color: #1d0f0f;
+    margin-top: 2rem;
+}
+
+.alert{
+  margin-top: 10px;
+}
