@@ -1,7 +1,10 @@
-from flask import render_template, url_for, flash, redirect
+from flask import render_template, url_for, flash, redirect, request
 from medium.forms import RegistrationForm, LoginForm
-from medium import app
+from medium import app, db, bcrypt
+from flask_login import login_user, current_user, logout_user, login_required
 from medium.models import User, Post
+
+
 posts = [
     {
         'author': 'Pepe Perez',
@@ -29,19 +32,44 @@ def about():
 
 @app.route("/register", methods=['GET', 'POST'])
 def register():
+
     registerForm = RegistrationForm()
     if registerForm.validate_on_submit():
-        flash(f'Account created for {registerForm.username.data}!', 'success')
-        return redirect(url_for('home'))
+        hashed_password = bcrypt.generate_password_hash(registerForm.password.data).decode('utf-8')
+        user = User(username = registerForm.username.data,
+                    email = registerForm.email.data,
+                    password = hashed_password)
+        db.session.add(user)
+        db.session.commit()
+        flash(f'Your new account has been created!', 'success')
+        return redirect(url_for('login'))
     return render_template('register.html', title='Register', form=registerForm)
 
 @app.route("/login", methods=['GET', 'POST'])
 def login():
     loginForm = LoginForm()
     if loginForm.validate_on_submit():
-        if loginForm.email.data == 'admin@blog.com' and loginForm.password.data == 'password':
-            flash('You have been logged in!', 'success')
-            return redirect(url_for('home'))
+        user = User.query.filter_by(email=loginForm.email.data).first()
+        if user and bcrypt.check_password_hash(user.password, loginForm.password.data):
+            login_user(user, remember=loginForm.remember.data)
+            next_page = request.args.get('next')
+            if next_page:
+                flash(f'Welcome to Social Medium {user.username}', 'success')
+                return redirect(next_page)
+            else:
+                flash(f'Welcome to Social Medium {user.username}', 'success')
+                return redirect(url_for('home'))
         else:
-            flash('Login Unsuccessful. Please check username and password', 'warning')
+            flash('Login Unsuccessful. Please try again', 'warning')
     return render_template('login.html', title='Login', form=loginForm)
+
+@app.route("/logout", methods=['GET'])
+def logout():
+    logout_user()
+    return redirect(url_for('home'))
+
+@app.route("/account", methods=['GET'])
+@login_required
+def account():
+    
+    return render_template('account.html', title='Account')
