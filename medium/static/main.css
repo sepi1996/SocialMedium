@@ -16,3 +16,10 @@ body {
 .alert{
   margin-top: 10px;
 }
+
+.account-imgSize {
+  height: 115px;
+  width: 115px;
+  margin-right: 20px;
+  margin-bottom: 16px;
+}

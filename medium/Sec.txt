@@ -4,6 +4,20 @@ SQLLite para desarrollo y Postgress para producción
 Trabajo con git y entornos virtuales
 Variable lazy en relaciones base de datos
 Debug to False para no dar info de errores
+Limitar nunero de intentos de inicio de sesion
+Proteccion de rutas, login i recuperar contadenyas seguro
+Compartir post privado
+Jwt o oauth para login
+Logging acciones
+Complejidad contrasenyas
+Brcypt utiliza sal i finciones de coste
+FileAllowed para protejer el tipo de archivo de subida
+Randomizar nombre ficheros subido por el usuario, para que no coincida con uno existente
+Redimesion de tam de imagenes para optimizar almacenamiento
+Utilización de get_or_404 para evitar errores provocados por el cliente
+Solo se puede borrar mediante post, no se puede harcorear la url
 -Checquear el tamaño de un titulo en el post(100)
 -Ver en el email, si no comprobamos el tam, y introducimos mas de 100 caracteres ver si hay overflow
 -cambiar el login para que sea por usuario no correo
+-Mirar como proteger laa ruta de las imagenes, y borrar la imagen de perfil vieja al actualizar el perfil
+
