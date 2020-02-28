@@ -19,6 +19,7 @@ Solo se puede borrar mediante post, no se puede harcorear la url
 Utilización de https://itsdangerous.palletsprojects.com/en/1.1.x/ para reset password
 todo lo de reset password
 Variables de entorno para ocultar usuario y contraseña del correo- Para que en el codigo no haya informacion que no debe estr ahi
+aplication factory and blueprints
 -Checquear el tamaño de un titulo en el post(100)
 -Ver en el email, si no comprobamos el tam, y introducimos mas de 100 caracteres ver si hay overflow
 -cambiar el login para que sea por usuario no correo

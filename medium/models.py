@@ -1,8 +1,9 @@
 #Represents something and stores it in the DB
-from medium import db, login_manager, app
+from medium import db, login_manager
 from datetime import datetime
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from flask_login import UserMixin#For the users sessions
+from flask import current_app
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -18,13 +19,13 @@ class User(db.Model, UserMixin):
 
     #Para generar tokens para resetear la contraseña
     def get_reset_token(self, expires_sec=1800):
-        s = Serializer(app.config['SECRET_KEY'], expires_sec)
+        s = Serializer(current_app.config['SECRET_KEY'], expires_sec)
         return s.dumps({'user_id': self.id}).decode('utf-8')#Esto nos devuelve el token a partir de la clave secreta, para el usuario en cuestion
 
     #Para comprobar la validez del token
     @staticmethod
     def verify_reset_token(token):
-        s = Serializer(app.config['SECRET_KEY'])#Cargamos el objeto Serializer
+        s = Serializer(current_app.config['SECRET_KEY'])#Cargamos el objeto Serializer
         try:
             user_id = s.loads(token)['user_id']#Comprobamos que el token es correcto y no ha expirado
         except:
