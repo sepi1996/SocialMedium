@@ -5,7 +5,7 @@
         src="{{ url_for('static', filename='profilePictures/' + post.author.image_file) }}">
     <div class="media-body">
         <div class="article-metadata">
-            <a class="mr-2" href="#">{{ post.author.username }}</a>
+            <a class="mr-2" href="{{ url_for('user_post', username=post.author.username) }}">{{ post.author.username }}</a>
             {% if post.author == current_user %}
             <div>
               <a class="btn btn-primary btn-sm m-1" href="{{ url_for('update_post', post_id=post.id) }}">Update</a>
