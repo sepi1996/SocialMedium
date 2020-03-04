@@ -3,66 +3,91 @@
 
 <div class="content-section">
     <div class="media">
-      <img class="rounded-circle account-imgSize" src="{{ image_path }}">
-      <div class="media-body">
-        <h2 class="account-heading">{{ current_user.username }}</h2>
-        <p class="text-secondary">{{ current_user.email }}</p>
-      </div>
+        <img class="rounded-circle account-imgSize" src="{{ image_path }}">
+        <div class="media-body">
+            <h2 class="account-heading">{{ current_user.username }}</h2>
+            <p class="text-secondary">{{ current_user.email }}</p>
+        </div>
     </div>
 
 
-<div class="content-section">
-    <form method="POST" action="" enctype="multipart/form-data">
-        {{ form.hidden_tag() }}
-        <!--Es importante para eviatr el CSRF mediante la utilización de un CSRF token-->
-        <fieldset class="form-group">
-            <legend class="border-bottom mb-3">Update Account</legend>
-            <div class="form-group">
-                {{ form.username.label(class="form-control-label") }}
+    <div class="content-section">
+        <form method="POST" action="" enctype="multipart/form-data">
+            {{ form.hidden_tag() }}
+            <!--Es importante para eviatr el CSRF mediante la utilización de un CSRF token-->
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-3">Update Account</legend>
+                <div class="form-group">
+                    {{ form.username.label(class="form-control-label") }}
 
-                {% if form.username.errors %}
+                    {% if form.username.errors %}
                     {{ form.username(class="form-control is-invalid") }}
                     <div>
                         {% for error in form.username.errors %}
-                            <span>
-                                {{ error }}
-                            </span>
+                        <span>
+                            {{ error }}
+                        </span>
                         {% endfor%}
                     </div>
-                {% else %}
+                    {% else %}
                     {{ form.username(class="form-control") }}
-                {% endif %}      
-            </div>
-            <div class="form-group">
-                {{ form.email.label(class="form-control-label") }}
-                {% if form.email.errors %}
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    {{ form.email.label(class="form-control-label") }}
+                    {% if form.email.errors %}
                     {{ form.email(class="form-control is-invalid") }}
                     <div>
                         {% for error in form.email.errors %}
-                            <span>
-                                {{ error }}
-                            </span>
+                        <span>
+                            {{ error }}
+                        </span>
                         {% endfor%}
                     </div>
-                {% else %}
+                    {% else %}
                     {{ form.email(class="form-control") }}
-                {% endif %}  
-            </div>
-            <div class="form-group">
-                {{ form.picture.label(class="form-control-label") }}
-                {{ form.picture(class="form-control-file") }}
-                    {% if form.picture.errors %}
-                        {% for error in form.picture.errors %}
-                            <span class="text-danger">{{ error }}</span></br>
-                        {% endfor %}
                     {% endif %}
+                </div>
+                <div class="form-group">
+                    {{ form.picture.label(class="form-control-label") }}
+                    {{ form.picture(class="form-control-file") }}
+                    {% if form.picture.errors %}
+                    {% for error in form.picture.errors %}
+                    <span class="text-danger">{{ error }}</span></br>
+                    {% endfor %}
+                    {% endif %}
+                </div>
+            </fieldset>
+            <div class="form-group">
+                {{ form.submit(class="btn btn-primary btn-sm m-1") }}
+                <button type="button" class="btn btn-danger btn-sm m-1" data-toggle="modal"
+                    data-target="#deleteModalUser">Delete Account</button>
             </div>
-        </fieldset>
-        <div class="form-group">
-                {{ form.submit(class="btn btn-primary mb-2") }}
-            </div>
-    </form>
+        </form>
+    </div>
 </div>
+
+
+<!-- Modal Bootstrap -->
+<div class="modal fade" id="deleteModalUser" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">Delete your account? This will also delete all your posts
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+                <form action="{{ url_for('users.delete_user', username=current_user.username) }}" method="POST">
+                    <input class="btn btn-danger" type="submit" value="Delete">
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
 
 {% endblock content %}

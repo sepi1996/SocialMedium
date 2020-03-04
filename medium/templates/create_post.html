@@ -32,7 +32,16 @@
                 {{ form.content(class="form-control") }}
                 {% endif %}
             </div>
+            <div class="form-check">
+                {{ form.public(class="form-check-input") }}
+                {{ form.public.label(class="form-check-label") }}
+            </div>
         </fieldset>
+        <div class="form-group">
+
+            {{ form.recaptcha(class="form-control is-invalid") }}
+
+        </div>
         <div class="form-group">
             {{ form.submit(class="btn btn-primary mb-2") }}
         </div>

@@ -1,10 +1,10 @@
-from flask import Blueprint, render_template, url_for, flash, redirect, request 
+from flask import Blueprint, render_template, url_for, flash, redirect, request, abort
 from flask_login import login_user, current_user, logout_user, login_required
 from medium import db, bcrypt
 from medium.models import User, Post
 from medium.users.forms import (RegistrationForm, LoginForm, UpdateAccountForm,
                                    RequestResetForm, ResetPasswordForm)
-from medium.users.utils import save_picture, send_reset_email
+from medium.users.utils import save_picture, send_reset_email, deleteUsersPosts
 
 users = Blueprint('users', __name__)
 
@@ -23,13 +23,14 @@ def register():
         return redirect(url_for('users.login'))
     return render_template('register.html', title='Register', form=registerForm)
 
+#Para loguerase mediante el usuario y la contraseña. Guarda el estado anterior
 @users.route("/login", methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
         return redirect(url_for('main.home'))
     loginForm = LoginForm()
     if loginForm.validate_on_submit():
-        user = User.query.filter_by(email=loginForm.email.data).first()
+        user = User.query.filter_by(username=loginForm.username.data).first()
         if user and bcrypt.check_password_hash(user.password, loginForm.password.data):
             login_user(user, remember=loginForm.remember.data)
             next_page = request.args.get('next')
@@ -43,6 +44,7 @@ def login():
             flash('Login Unsuccessful. Please try again', 'warning')
     return render_template('login.html', title='Login', form=loginForm)
 
+#Para hacer el logout del actual usuario
 @users.route("/logout", methods=['GET'])
 def logout():
     logout_user()
@@ -68,6 +70,7 @@ def account():
     image_path = url_for('static', filename=f'profilePictures/{current_user.image_file}')
     return render_template('account.html', title='Account', image_path=image_path, form=accountForm)
 
+##Muestra los posts del usuario pasado como parametro
 @users.route('/user/<string:username>')
 def user_post(username):
     page = request.args.get('page', 1, type=int)
@@ -75,8 +78,6 @@ def user_post(username):
     posts = Post.query.filter_by(author=user)\
             .order_by(Post.date_posted.desc()).paginate(page=page, per_page=4)
     return render_template('user_post.html', posts = posts, user=user)
-
-
 
 
 @users.route("/reset_password", methods=['GET', 'POST'])
@@ -109,3 +110,17 @@ def reset_token(token):
         flash('Password Updated!', 'success')
         return redirect(url_for('users.login'))
     return render_template('reset_token.html', title='Reset Password', form=passwordResetform)
+
+
+@users.route("/user/<string:username>/delete", methods=['GET','POST'])
+@login_required
+def delete_user(username):
+    user = User.query.filter_by(username=username).first_or_404()
+    if user != current_user:
+        abort(403)
+    #No hace falta tenemos on delete cascade
+    #Post.query.filter_by(user_id=user.id).delete()
+    db.session.delete(user)
+    db.session.commit()
+    flash('User deleted!', 'success')
+    return redirect(url_for('main.home'))

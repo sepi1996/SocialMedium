@@ -12,6 +12,7 @@
     integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
   <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+  <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
 
   {% if title %}
   <title>Social Medium - {{ title }}</title>
@@ -25,9 +26,10 @@
   <div class="container">
     <nav class="navbar navbar-light bg-light"></nav>
     <nav class="navbar navbar-dark bg-dark">
-      <div class="navbar-header">
-        <a class="navbar-brand"href="{{ url_for('main.home') }}">Social Medium</a>
-      </div>
+        <a class="navbar-brand" href="{{ url_for('main.home') }}">
+            <img src="{{ url_for('static', filename='favicon.ico') }}" width="30" height="30" class="d-inline-block align-top" alt="">
+            Social Medium
+          </a>
       {% if current_user.is_authenticated %}
       <form class="form-inline">
         <a class="nav-item nav-link navbar-brand" href="{{ url_for('posts.new_post') }}">New Post</a>
@@ -65,8 +67,10 @@
             <ul class="list-group">
               <li class="list-group-item list-group-item-light">Latest Posts</li>
               <li class="list-group-item list-group-item-light">Announcements</li>
-              <li class="list-group-item list-group-item-light">Calendars</li>
-              <li class="list-group-item list-group-item-light">etc</li>
+              <li class="list-group-item list-group-item-light">Hide your own posts</li>
+              <li class="list-group-item list-group-item-light">Show only your posts</li>
+              <li class="list-group-item list-group-item-light">Show your private posts</li>
+              <li class="list-group-item list-group-item-light">Show your public posts</li>
             </ul>
           </p>
         </div>

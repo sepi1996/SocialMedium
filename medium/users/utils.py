@@ -31,3 +31,6 @@ def save_picture(form_picture):
     newImage.save(picturePath)
 
     return pictureFilename
+
+def deleteUsersPosts(user):
+    pass

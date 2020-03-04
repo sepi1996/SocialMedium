@@ -1,7 +1,6 @@
 #Represents something through the HTML code
 
-
-from flask_wtf import FlaskForm
+from flask_wtf import FlaskForm, RecaptchaField
 from flask_wtf.file import FileField, FileAllowed
 from wtforms import StringField, PasswordField, SubmitField, BooleanField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
@@ -28,11 +27,14 @@ class RegistrationForm(FlaskForm):
         if user:
             raise ValidationError('Email already in use. Choose another one.')
 
+    def validate_password(self, password):
+        if len(password.data) < 5:
+            raise ValidationError('Password is too simple, please create a more secure one')
 
 
 class LoginForm(FlaskForm):
-    email = StringField('Email',
-                        validators=[DataRequired(), Email()])
+    username = StringField('Username',
+                        validators=[DataRequired(), Length(min=2, max=25)])
     password = PasswordField('Password', validators=[DataRequired()])
     remember = BooleanField('Remember Me')
     submit = SubmitField('Login')

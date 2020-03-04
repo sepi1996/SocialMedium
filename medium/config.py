@@ -16,4 +16,6 @@ class Config:
     MAIL_USERNAME = config.get('MAIL_USERNAME')
     MAIL_PASSWORD = config.get('MAIL_PASSWORD')
 
+    RECAPTCHA_PUBLIC_KEY = config.get('RECAPTCHA_PUBLIC_KEY')
+    RECAPTCHA_PRIVATE_KEY = config.get('RECAPTCHA_PRIVATE_KEY')
 

@@ -16,7 +16,8 @@ def new_post():
     if postForm.validate_on_submit():
         post = Post(title = postForm.title.data,
                     content = postForm.content.data,
-                    author = current_user)
+                    author = current_user,
+                    public = postForm.public.data)
         db.session.add(post)
         db.session.commit()
         flash(f'Your post {postForm.title.data} has been created', 'success')
