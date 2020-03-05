@@ -1,0 +1,14 @@
+ 
+{% extends "base.html" %}
+
+{% block content %}
+<div class="content-section">
+    <fieldset class="form-group">
+        <legend class="border-bottom mb-3">Register</legend>
+    <h1>Two Factor Authentication Setup</h1>
+    <p>You are almost done! Please start FreeOTP on your smartphone and scan the following QR Code with it:</p>
+    <p><img id="qrcode" src="{{ url_for('users.qrcode') }}"></p>
+    <p>I'm done, take me to the <a href="{{ url_for('users.login') }}">Login</a> page!</p>
+    </fieldset>
+</div>
+{% endblock content %}

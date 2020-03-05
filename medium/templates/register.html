@@ -7,6 +7,7 @@
         <!--Es importante para eviatr el CSRF mediante la utilización de un CSRF token-->
         <fieldset class="form-group">
             <legend class="border-bottom mb-3">Register</legend>
+            <p>Before you submit this form, please ensure you have <a href="https://freeotp.github.io/">FreeOTP</a> installed on your smartphone, as you will need it to complete your registration.</p>
             <div class="form-group">
                 {{ form.username.label(class="form-control-label") }}
 
@@ -69,6 +70,7 @@
                 {% endif %}  
             </div>
         </fieldset>
+        <div class="alert alert-warning" role="alert">Note: The next page will show sensitive information. Make sure nobody can see your screen before pressing the Sign up button.</div>
         <div class="form-group">
                 {{ form.submit(class="btn btn-primary mb-2") }}
             </div>

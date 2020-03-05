@@ -28,14 +28,15 @@ class RegistrationForm(FlaskForm):
             raise ValidationError('Email already in use. Choose another one.')
 
     def validate_password(self, password):
-        if len(password.data) < 5:
-            raise ValidationError('Password is too simple, please create a more secure one')
+        if len(password.data) < 8:
+            raise ValidationError('Password is too short, please create a more secure one')
 
 
 class LoginForm(FlaskForm):
     username = StringField('Username',
                         validators=[DataRequired(), Length(min=2, max=25)])
     password = PasswordField('Password', validators=[DataRequired()])
+    token = StringField('Token', validators=[DataRequired(), Length(6, 6)])
     remember = BooleanField('Remember Me')
     submit = SubmitField('Login')
 

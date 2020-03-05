@@ -1,10 +1,17 @@
-from flask import Blueprint, render_template, url_for, flash, redirect, request, abort
+from flask import Blueprint, render_template, url_for, flash, redirect, request, abort, session
 from flask_login import login_user, current_user, logout_user, login_required
 from medium import db, bcrypt
 from medium.models import User, Post
 from medium.users.forms import (RegistrationForm, LoginForm, UpdateAccountForm,
                                    RequestResetForm, ResetPasswordForm)
 from medium.users.utils import save_picture, send_reset_email, deleteUsersPosts
+
+import onetimepass
+import pyqrcode
+import os
+import base64
+import onetimepass
+from io import BytesIO
 
 users = Blueprint('users', __name__)
 
@@ -20,7 +27,10 @@ def register():
         db.session.add(user)
         db.session.commit()
         flash(f'Your new account has been created!', 'success')
-        return redirect(url_for('users.login'))
+        # redirect to the two-factor auth page, passing username in session
+        session['username'] = user.username
+        return redirect(url_for('users.two_factor_setup'))
+        #return redirect(url_for('users.login'))
     return render_template('register.html', title='Register', form=registerForm)
 
 #Para loguerase mediante el usuario y la contraseña. Guarda el estado anterior
@@ -31,7 +41,7 @@ def login():
     loginForm = LoginForm()
     if loginForm.validate_on_submit():
         user = User.query.filter_by(username=loginForm.username.data).first()
-        if user and bcrypt.check_password_hash(user.password, loginForm.password.data):
+        if user and bcrypt.check_password_hash(user.password, loginForm.password.data) and user.verify_totp(loginForm.token.data):
             login_user(user, remember=loginForm.remember.data)
             next_page = request.args.get('next')
             if next_page:
@@ -45,7 +55,7 @@ def login():
     return render_template('login.html', title='Login', form=loginForm)
 
 #Para hacer el logout del actual usuario
-@users.route("/logout", methods=['GET'])
+@users.route("/logout")
 def logout():
     logout_user()
     return redirect(url_for('main.home'))
@@ -124,3 +134,40 @@ def delete_user(username):
     db.session.commit()
     flash('User deleted!', 'success')
     return redirect(url_for('main.home'))
+
+
+#QR
+@users.route('/qrcode')
+def qrcode():
+    if 'username' not in session:
+        abort(404)
+    user = User.query.filter_by(username=session['username']).first()
+    if user is None:
+        abort(404)
+
+    # for added security, remove username from session
+    del session['username']
+
+    # render qrcode for FreeTOTP
+    url = pyqrcode.create(user.get_totp_uri())
+    stream = BytesIO()
+    url.svg(stream, scale=3)
+    return stream.getvalue(), 200, {
+        'Content-Type': 'image/svg+xml',
+        'Cache-Control': 'no-cache, no-store, must-revalidate',
+        'Pragma': 'no-cache',
+        'Expires': '0'}
+
+@users.route('/twofactor')
+def two_factor_setup():
+    if 'username' not in session:
+        return redirect(url_for('main.home'))
+    user = User.query.filter_by(username=session['username']).first()
+    if user is None:
+        return redirect(url_for('main.home'))
+    # since this page contains the sensitive qrcode, make sure the browser
+    # does not cache it
+    return render_template('two-factor-setup.html'), 200, {
+        'Cache-Control': 'no-cache, no-store, must-revalidate',
+        'Pragma': 'no-cache',
+        'Expires': '0'}
