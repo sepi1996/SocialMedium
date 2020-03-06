@@ -6,6 +6,8 @@ from wtforms import StringField, PasswordField, SubmitField, BooleanField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
 from flask_login import current_user
 from medium.models import User
+from password_strength import PasswordPolicy
+
 
 class RegistrationForm(FlaskForm):
     username = StringField('Username',
@@ -26,11 +28,19 @@ class RegistrationForm(FlaskForm):
         user = User.query.filter_by(email=email.data).first()
         if user:
             raise ValidationError('Email already in use. Choose another one.')
-
+'''
     def validate_password(self, password):
-        if len(password.data) < 8:
-            raise ValidationError('Password is too short, please create a more secure one')
-
+        policy = PasswordPolicy.from_names(
+            length=8,  # min length: 8
+            uppercase=2,  # need min. 2 uppercase letters
+            numbers=1,  # need min. 2 digits
+            special=1,  # need min. 2 special characters
+            nonletters=2,  # need min. 2 non-letter characters (digits, specials, anything)
+        )
+        if policy.test(password):
+            raise ValidationError('Please create a more secure password with at least: -8 caracters.\
+                                 -2 Uppercase. -1 Number. -1 Special character. -2 Non-letter characters')
+'''
 
 class LoginForm(FlaskForm):
     username = StringField('Username',

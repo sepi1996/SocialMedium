@@ -4,7 +4,8 @@ from medium import db, bcrypt
 from medium.models import User, Post
 from medium.users.forms import (RegistrationForm, LoginForm, UpdateAccountForm,
                                    RequestResetForm, ResetPasswordForm)
-from medium.users.utils import save_picture, send_reset_email, deleteUsersPosts
+from medium.users.utils import save_picture, send_reset_email, deleteUsersPosts, send_confirmation_email
+
 
 import onetimepass
 import pyqrcode
@@ -18,6 +19,8 @@ users = Blueprint('users', __name__)
 @users.route("/register", methods=['GET', 'POST'])
 def register():
 
+    if current_user.is_authenticated:
+        return redirect(url_for('main.home'))
     registerForm = RegistrationForm()
     if registerForm.validate_on_submit():
         hashed_password = bcrypt.generate_password_hash(registerForm.password.data).decode('utf-8')
@@ -26,11 +29,11 @@ def register():
                     password = hashed_password)
         db.session.add(user)
         db.session.commit()
-        flash(f'Your new account has been created!', 'success')
+        send_confirmation_email(user)
+        flash(f'Your new account has been created! Please verify it within 30 minutes.', 'info')
         # redirect to the two-factor auth page, passing username in session
         session['username'] = user.username
         return redirect(url_for('users.two_factor_setup'))
-        #return redirect(url_for('users.login'))
     return render_template('register.html', title='Register', form=registerForm)
 
 #Para loguerase mediante el usuario y la contraseña. Guarda el estado anterior
@@ -41,15 +44,19 @@ def login():
     loginForm = LoginForm()
     if loginForm.validate_on_submit():
         user = User.query.filter_by(username=loginForm.username.data).first()
-        if user and bcrypt.check_password_hash(user.password, loginForm.password.data) and user.verify_totp(loginForm.token.data):
-            login_user(user, remember=loginForm.remember.data)
-            next_page = request.args.get('next')
-            if next_page:
-                flash(f'Welcome to Social Medium {user.username}', 'success')
-                return redirect(next_page)
+        if user and bcrypt.check_password_hash(user.password, loginForm.password.data) \
+            and user.verify_totp(loginForm.token.data):
+            if user.confirmed:
+                login_user(user, remember=loginForm.remember.data)
+                next_page = request.args.get('next')
+                if next_page:
+                    flash(f'Welcome to Social Medium {user.username}', 'success')
+                    return redirect(next_page)
+                else:
+                    flash(f'Welcome to Social Medium {user.username}', 'success')
+                    return redirect(url_for('main.home'))
             else:
-                flash(f'Welcome to Social Medium {user.username}', 'success')
-                return redirect(url_for('main.home'))
+                flash('Please verify your account via email', 'warning')
         else:
             flash('Login Unsuccessful. Please try again', 'warning')
     return render_template('login.html', title='Login', form=loginForm)
@@ -122,6 +129,22 @@ def reset_token(token):
     return render_template('reset_token.html', title='Reset Password', form=passwordResetform)
 
 
+@users.route("/account_activation/<token>", methods=['GET', 'POST'])
+def account_activation(token):
+    if current_user.is_authenticated:
+        flash('You are already logged in, no need to activate your account', 'info')
+        return redirect(url_for('main.home'))
+    user = User.verify_reset_token(token)
+    if user is None:
+        flash('That is an invalid or expired token', 'danger')
+        return redirect(url_for('users.login'))
+    else:
+        user.confirmed = True
+        db.session.commit()
+        flash('Account activated. Now you can login into Social Medium', 'success')
+        return redirect(url_for('users.login'))
+
+
 @users.route("/user/<string:username>/delete", methods=['GET','POST'])
 @login_required
 def delete_user(username):
@@ -130,8 +153,10 @@ def delete_user(username):
         abort(403)
     #No hace falta tenemos on delete cascade
     #Post.query.filter_by(user_id=user.id).delete()
+    logout_user()
     db.session.delete(user)
     db.session.commit()
+    
     flash('User deleted!', 'success')
     return redirect(url_for('main.home'))
 

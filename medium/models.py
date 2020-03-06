@@ -23,8 +23,10 @@ class User(db.Model, UserMixin):
     image_file = db.Column(db.String(20), nullable=False, default='default.jpg')
     password = db.Column(db.String(60), nullable=False)
     otp_secret = db.Column(db.String(16))
+    confirmed = db.Column(db.Boolean, default=False)
     posts = db.relationship('Post', cascade="all,delete", backref='author', lazy=True)
 
+    ##Para 2FA
     def __init__(self, **kwargs):
         super(User, self).__init__(**kwargs)
         if self.otp_secret is None:
@@ -38,10 +40,31 @@ class User(db.Model, UserMixin):
     def verify_totp(self, token):
         return onetimepass.valid_totp(token, self.otp_secret)
 
+
+    #Para correo de confirmación
+    def generate_confirmation_token(self, expiration=3600):
+        s = Serializer(current_app.config['SECRET_KEY'], expiration)
+        return s.dumps({'confirm': self.id}).decode('utf-8')
+
+    def confirm(self, token):
+        s = Serializer(current_app.config['SECRET_KEY'])
+        try:
+            data = s.loads(token.encode('utf-8'))
+        except:
+            return False
+        if data.get('confirm') != self.id:
+            return False
+        self.confirmed = True
+        db.session.add(self)
+        return True
+
+
     #Para generar tokens para resetear la contraseña
-    def get_reset_token(self, expires_sec=1800):
-        s = Serializer(current_app.config['SECRET_KEY'], expires_sec)
-        return s.dumps({'user_id': self.id}).decode('utf-8')#Esto nos devuelve el token a partir de la clave secreta, para el usuario en cuestion
+    def get_reset_token(self, expiration=180):
+        s = Serializer(current_app.config['SECRET_KEY'], expiration)
+        return s.dumps({'user_id': self.id}).decode('utf-8')#Esto nos devuelve el token a partir de la clave secreta, para ello le 
+        #pasamos como payload un identificador en este caso un diccionario con el id del usuario, que mas tarde mediante loads, sera 
+        # decodifiaco de nuevo
 
     #Para comprobar la validez del token
     @staticmethod

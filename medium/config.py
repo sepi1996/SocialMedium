@@ -1,5 +1,6 @@
 import os
 import json
+#from datetime import timedelta
 
 with open('/etc/config.json') as config_file:
     config = json.load(config_file)
@@ -18,4 +19,5 @@ class Config:
 
     RECAPTCHA_PUBLIC_KEY = config.get('RECAPTCHA_PUBLIC_KEY')
     RECAPTCHA_PRIVATE_KEY = config.get('RECAPTCHA_PRIVATE_KEY')
+    #REMEMBER_COOKIE_DURATION = timedelta(minutes=1)
 
