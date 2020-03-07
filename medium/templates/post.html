@@ -1,22 +1,35 @@
 {% extends "base.html" %}
 {% block content %}
 <article class="media content-section">
-    <img class="rounded-circle account-imgSize"
-        src="{{ url_for('static', filename='profilePictures/' + post.author.image_file) }}">
-    <div class="media-body">
-        <div class="article-metadata">
-            <a class="mr-2" href="{{ url_for('users.user_post', username=post.author.username) }}">{{ post.author.username }}</a>
-            {% if post.author == current_user %}
-            <div>
-              <a class="btn btn-primary btn-sm m-1" href="{{ url_for('posts.update_post', post_id=post.id) }}">Update</a>
-              <button type="button" class="btn btn-danger btn-sm m-1" data-toggle="modal" data-target="#deleteModal">Delete</button>
-            </div>
-          {% endif %}
-        </div>
-        <h2 class="article-title">{{ post.title }}</h2>
-        <p class="article-content">{{ post.content }}</p>
-        <small class="text-muted">{{ post.date_posted.strftime('%Y-%m-%d') }}</small>
+  <img class="rounded-circle account-imgSize"
+    src="{{ url_for('static', filename='profilePictures/' + post.author.image_file) }}">
+  <div class="media-body">
+    <div class="article-metadata">
+      <a class="mr-2"
+        href="{{ url_for('users.user_post', username=post.author.username) }}">{{ post.author.username }}</a>
+      {% if post.author == current_user %}
+      <div>
+        <a class="btn btn-primary btn-sm m-1" href="{{ url_for('posts.update_post', post_id=post.id) }}">Update</a>
+        {% if post.shared_token %}
+
+          <input type="text" value=" http://127.0.0.1:5000/post/{{ post.shared_token }}" id="myInput">
+
+            <button class="btn btn-primary btn-sm m-1" onclick="myFunction()" onmouseout="outFunc()">
+              <span class="tooltiptext" id="myTooltip">Copy to clipboard</span>
+            </button>  
+      <a class="btn btn-primary btn-sm m-1" href="{{ url_for('posts.disallow_post', post_id=post.id) }}">Remove link</a>
+      {% else %}
+      <a class="btn btn-primary btn-sm m-1" href="{{ url_for('posts.share_post', post_id=post.id) }}">Share</a>
+      {% endif %}
+      <button type="button" class="btn btn-danger btn-sm m-1" data-toggle="modal"
+        data-target="#deleteModal">Delete</button>
     </div>
+    {% endif %}
+  </div>
+  <h2 class="article-title">{{ post.title }}</h2>
+  <p class="article-content">{{ post.content }}</p>
+  <small class="text-muted">{{ post.date_posted.strftime('%Y-%m-%d') }}</small>
+
 </article>
 
   <!-- Modal Bootstrap -->
@@ -38,4 +51,44 @@
           </div>
         </div>
       </div>
+
+      <script>
+        function myFunction() {
+          var copyText = document.getElementById("myInput");
+          copyText.select();
+          copyText.setSelectionRange(0, 99999);
+          document.execCommand("copy");
+          
+          var tooltip = document.getElementById("myTooltip");
+          tooltip.innerHTML = "Copied: " + copyText.value;
+        }
+        
+        function outFunc() {
+          var tooltip = document.getElementById("myTooltip");
+          tooltip.innerHTML = "Copy to clipboard";
+        }
+        </script>
+
+<!--
+
+
+      <div class="modal fade" id="shareModal" tabindex="-1" role="dialog" aria-labelledby="shareModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="shareModalLabel">Copy the share link</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+              <form action="{{ url_for('posts.delete_post', post_id=post.id) }}" method="POST">
+                <input class="btn btn-danger" type="submit" value="Delete">
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      -->
 {% endblock content %}

@@ -1,0 +1,61 @@
+[2020-03-06 16:25:02,904] {/home/pepe/Desktop/mediumPepe/medium/users/routes.py:67} WARNING - Intento de inicio de sesion mediante el usuario root 
+[2020-03-06 16:25:05,957] {/home/pepe/Desktop/mediumPepe/medium/users/routes.py:67} WARNING - Intento de inicio de sesion mediante el usuario root 
+[2020-03-06 16:25:23,347] {/home/pepe/Desktop/mediumPepe/medium/users/routes.py:60} INFO - El usuario root se ha logeado
+[2020-03-06 16:28:12,528] {/home/pepe/Desktop/mediumPepe/medium/users/routes.py:60} INFO - El usuario root se ha logeado
+[2020-03-06 16:29:48,223] {/home/pepe/Desktop/mediumPepe/medium/users/routes.py:74} INFO - El usuario root ha cerrado sesion
+[2020-03-06 16:41:14,690] {/home/pepe/Desktop/mediumPepe/medium/users/routes.py:67} WARNING - Inicio de sesión fallido mediante el usuario root 
+[2020-03-06 16:41:14,690] {/home/pepe/Desktop/mediumPepe/medium/users/routes.py:68} WARNING - 127.0.0.1
+[2020-03-06 16:48:48,713] {/home/pepe/Desktop/mediumPepe/medium/users/routes.py:67} WARNING - Inicio de sesión fallido mediante el usuario root 
+[2020-03-06 16:48:48,714] {/home/pepe/Desktop/mediumPepe/medium/users/routes.py:68} WARNING - 127.0.0.1  Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.122 Safari/537.36
+[2020-03-06 16:51:47,028] {/home/pepe/Desktop/mediumPepe/medium/users/routes.py:67} WARNING - Inicio de sesión fallido mediante el usuario root 
+[2020-03-06 16:52:34,085] {/home/pepe/Desktop/mediumPepe/medium/users/routes.py:67} WARNING - Inicio de sesión fallido mediante el usuario root 
+[2020-03-06 16:52:34,086] {/home/pepe/Desktop/mediumPepe/medium/users/routes.py:68} WARNING - 127.0.0.1  Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.122 Safari/537.36 ImmutableMultiDict([('session', '.eJwFwVsKgCAQBdC9zHeE-c7NiI5Xgl7g9BftvXNeyn1ANkq9HIKJ8sCJs2JkAd9XE0pezWoiltHzc--4KJEPWLnFoHVUNTqtavNcSwlWw1nDSzHWwIO-Hy7LHm0.XmKNAA.xGfLkZaFmJVjPvFBGd-IvOF1jaE')])
+[2020-03-06 17:10:07,884] {/home/pepe/Desktop/mediumPepe/medium/users/routes.py:60} INFO - El usuario root se ha logeado
+[2020-03-07 08:32:37,088] {/home/pepe/Desktop/mediumPepe/medium/users/routes.py:60} INFO - El usuario pepe se ha logeado
+[2020-03-07 09:21:09,587] {/home/pepe/Desktop/mediumPepe/medium/posts/routes.py:99} INFO - Token eyJhbGciOiJIUzUxMiJ9.eyJwb3N0X2lkIjoxfQ.GEx-F2y9BYh2Pg5PDN_kDuMw_1IKZIsUxL_y-OOoZBvsBmaqoVvqQ0Nr2dRYXg-KP8L2F_sd3nI3t2RdG8-fSg 
+[2020-03-07 09:22:23,969] {/home/pepe/Desktop/mediumPepe/medium/posts/routes.py:99} INFO - Token eyJhbGciOiJIUzUxMiJ9.eyJwb3N0X2lkIjoxfQ.GEx-F2y9BYh2Pg5PDN_kDuMw_1IKZIsUxL_y-OOoZBvsBmaqoVvqQ0Nr2dRYXg-KP8L2F_sd3nI3t2RdG8-fSg 
+[2020-03-07 09:22:23,969] {/home/pepe/Desktop/mediumPepe/medium/posts/routes.py:101} INFO - Post <method-wrapper '__repr__' of NoneType object at 0x9d4380> 
+[2020-03-07 09:23:03,323] {/home/pepe/Desktop/mediumPepe/medium/posts/routes.py:99} INFO - Token eyJhbGciOiJIUzUxMiJ9.eyJwb3N0X2lkIjoxfQ.GEx-F2y9BYh2Pg5PDN_kDuMw_1IKZIsUxL_y-OOoZBvsBmaqoVvqQ0Nr2dRYXg-KP8L2F_sd3nI3t2RdG8-fSg 
+[2020-03-07 09:23:03,324] {/home/pepe/Desktop/mediumPepe/medium/posts/routes.py:101} INFO - Post None 
+[2020-03-07 09:28:08,705] {/home/pepe/Desktop/mediumPepe/medium/posts/routes.py:99} INFO - Token eyJhbGciOiJIUzUxMiJ9.eyJwb3N0X2lkIjoyfQ.JUFNfp1hB3g-K3ZHKuTufBfKiZSE4acKn0XG3y7vx3KXYHHCqZqLJsIRdnxiVevKwKrzGxzjOJEF-CnLj1pIHg 
+[2020-03-07 09:28:08,706] {/home/pepe/Desktop/mediumPepe/medium/posts/routes.py:101} INFO - Post None 
+[2020-03-07 09:30:27,685] {/home/pepe/Desktop/mediumPepe/medium/posts/routes.py:99} INFO - Token eyJhbGciOiJIUzUxMiJ9.eyJwb3N0X2lkIjoyfQ.JUFNfp1hB3g-K3ZHKuTufBfKiZSE4acKn0XG3y7vx3KXYHHCqZqLJsIRdnxiVevKwKrzGxzjOJEF-CnLj1pIHg 
+[2020-03-07 09:30:27,686] {/home/pepe/Desktop/mediumPepe/medium/posts/routes.py:101} INFO - Post None 
+[2020-03-07 09:32:11,658] {/home/pepe/Desktop/mediumPepe/medium/posts/routes.py:99} INFO - Token eyJhbGciOiJIUzUxMiJ9.eyJwb3N0X2lkIjoyfQ.JUFNfp1hB3g-K3ZHKuTufBfKiZSE4acKn0XG3y7vx3KXYHHCqZqLJsIRdnxiVevKwKrzGxzjOJEF-CnLj1pIHg 
+[2020-03-07 09:32:11,659] {/home/pepe/Desktop/mediumPepe/medium/models.py:85} WARNING - S <itsdangerous.jws.TimedJSONWebSignatureSerializer object at 0x7f2a31c273c8> 
+[2020-03-07 09:32:11,659] {/home/pepe/Desktop/mediumPepe/medium/models.py:86} WARNING - Token eyJhbGciOiJIUzUxMiJ9.eyJwb3N0X2lkIjoyfQ.JUFNfp1hB3g-K3ZHKuTufBfKiZSE4acKn0XG3y7vx3KXYHHCqZqLJsIRdnxiVevKwKrzGxzjOJEF-CnLj1pIHg 
+[2020-03-07 09:32:11,660] {/home/pepe/Desktop/mediumPepe/medium/posts/routes.py:101} INFO - Post None 
+[2020-03-07 09:36:31,350] {/home/pepe/Desktop/mediumPepe/medium/posts/routes.py:99} INFO - Token eyJhbGciOiJIUzUxMiJ9.eyJwb3N0X2lkIjoyfQ.JUFNfp1hB3g-K3ZHKuTufBfKiZSE4acKn0XG3y7vx3KXYHHCqZqLJsIRdnxiVevKwKrzGxzjOJEF-CnLj1pIHg 
+[2020-03-07 09:36:31,351] {/home/pepe/Desktop/mediumPepe/medium/models.py:85} WARNING - S <itsdangerous.jws.JSONWebSignatureSerializer object at 0x7fb7e9cfc630> 
+[2020-03-07 09:36:31,351] {/home/pepe/Desktop/mediumPepe/medium/models.py:86} WARNING - Token eyJhbGciOiJIUzUxMiJ9.eyJwb3N0X2lkIjoyfQ.JUFNfp1hB3g-K3ZHKuTufBfKiZSE4acKn0XG3y7vx3KXYHHCqZqLJsIRdnxiVevKwKrzGxzjOJEF-CnLj1pIHg 
+[2020-03-07 09:36:31,352] {/home/pepe/Desktop/mediumPepe/medium/models.py:89} WARNING - ID 2 
+[2020-03-07 09:36:31,356] {/home/pepe/Desktop/mediumPepe/medium/posts/routes.py:101} INFO - Post Post('Post Pepe', posted at '2020-03-07 10:03:10.592358') 
+[2020-03-07 09:36:43,437] {/home/pepe/Desktop/mediumPepe/medium/posts/routes.py:99} INFO - Token eyJhbGciOiJIUzUxMiJ9.eyJwb3N0X2lkIjoyfQ.JUFNfp1hB3g-K3ZHKuTufBfKiZSE4acKn0XG3y7vx3KXYHHCqZqLJsIRdnxiVevKwKrzGxzjOJEF-CnLj1pIHg 
+[2020-03-07 09:36:43,437] {/home/pepe/Desktop/mediumPepe/medium/models.py:85} WARNING - S <itsdangerous.jws.JSONWebSignatureSerializer object at 0x7fb7e9cfc3c8> 
+[2020-03-07 09:36:43,438] {/home/pepe/Desktop/mediumPepe/medium/models.py:86} WARNING - Token eyJhbGciOiJIUzUxMiJ9.eyJwb3N0X2lkIjoyfQ.JUFNfp1hB3g-K3ZHKuTufBfKiZSE4acKn0XG3y7vx3KXYHHCqZqLJsIRdnxiVevKwKrzGxzjOJEF-CnLj1pIHg 
+[2020-03-07 09:36:43,438] {/home/pepe/Desktop/mediumPepe/medium/models.py:89} WARNING - ID 2 
+[2020-03-07 09:36:43,440] {/home/pepe/Desktop/mediumPepe/medium/posts/routes.py:101} INFO - Post Post('Post Pepe', posted at '2020-03-07 10:03:10.592358') 
+[2020-03-07 09:40:23,046] {/home/pepe/Desktop/mediumPepe/medium/posts/routes.py:99} INFO - Token eyJhbGciOiJIUzUxMiJ9.eyJwb3N0X2lkIjoyfQ.JUFNfp1hB3g-K3ZHKuTufBfKiZSE4acKn0XG3y7vx3KXYHHCqZqLJsIRdnxiVevKwKrzGxzjOJEF-CnLj1pIHg 
+[2020-03-07 09:40:23,047] {/home/pepe/Desktop/mediumPepe/medium/models.py:85} WARNING - S <itsdangerous.jws.JSONWebSignatureSerializer object at 0x7fc2b136d898> 
+[2020-03-07 09:40:23,047] {/home/pepe/Desktop/mediumPepe/medium/models.py:86} WARNING - Token eyJhbGciOiJIUzUxMiJ9.eyJwb3N0X2lkIjoyfQ.JUFNfp1hB3g-K3ZHKuTufBfKiZSE4acKn0XG3y7vx3KXYHHCqZqLJsIRdnxiVevKwKrzGxzjOJEF-CnLj1pIHg 
+[2020-03-07 09:40:23,048] {/home/pepe/Desktop/mediumPepe/medium/models.py:89} WARNING - ID 2 
+[2020-03-07 09:40:23,074] {/home/pepe/Desktop/mediumPepe/medium/posts/routes.py:101} INFO - Post Post('Post Pepe', posted at '2020-03-07 10:03:10.592358') 
+[2020-03-07 09:40:52,630] {/home/pepe/Desktop/mediumPepe/medium/posts/routes.py:99} INFO - Token eyJhbGciOiJIUzUxMiJ9.eyJwb3N0X2lkIjoyfQ.JUFNfp1hB3g-K3ZHKuTufBfKiZSE4acKn0XG3y7vx3KXYHHCqZqLJsIRdnxiVevKwKrzGxzjOJEF-CnLj1pIHg 
+[2020-03-07 09:40:52,631] {/home/pepe/Desktop/mediumPepe/medium/models.py:85} WARNING - S <itsdangerous.jws.JSONWebSignatureSerializer object at 0x7fc2b013def0> 
+[2020-03-07 09:40:52,633] {/home/pepe/Desktop/mediumPepe/medium/models.py:86} WARNING - Token eyJhbGciOiJIUzUxMiJ9.eyJwb3N0X2lkIjoyfQ.JUFNfp1hB3g-K3ZHKuTufBfKiZSE4acKn0XG3y7vx3KXYHHCqZqLJsIRdnxiVevKwKrzGxzjOJEF-CnLj1pIHg 
+[2020-03-07 09:40:52,634] {/home/pepe/Desktop/mediumPepe/medium/models.py:89} WARNING - ID 2 
+[2020-03-07 09:40:52,640] {/home/pepe/Desktop/mediumPepe/medium/posts/routes.py:101} INFO - Post Post('Post Pepe', posted at '2020-03-07 10:03:10.592358') 
+[2020-03-07 09:40:53,543] {/home/pepe/Desktop/mediumPepe/medium/posts/routes.py:99} INFO - Token eyJhbGciOiJIUzUxMiJ9.eyJwb3N0X2lkIjoyfQ.JUFNfp1hB3g-K3ZHKuTufBfKiZSE4acKn0XG3y7vx3KXYHHCqZqLJsIRdnxiVevKwKrzGxzjOJEF-CnLj1pIHg 
+[2020-03-07 09:40:53,544] {/home/pepe/Desktop/mediumPepe/medium/models.py:85} WARNING - S <itsdangerous.jws.JSONWebSignatureSerializer object at 0x7fc2b013de48> 
+[2020-03-07 09:40:53,546] {/home/pepe/Desktop/mediumPepe/medium/models.py:86} WARNING - Token eyJhbGciOiJIUzUxMiJ9.eyJwb3N0X2lkIjoyfQ.JUFNfp1hB3g-K3ZHKuTufBfKiZSE4acKn0XG3y7vx3KXYHHCqZqLJsIRdnxiVevKwKrzGxzjOJEF-CnLj1pIHg 
+[2020-03-07 09:40:53,547] {/home/pepe/Desktop/mediumPepe/medium/models.py:89} WARNING - ID 2 
+[2020-03-07 09:40:53,551] {/home/pepe/Desktop/mediumPepe/medium/posts/routes.py:101} INFO - Post Post('Post Pepe', posted at '2020-03-07 10:03:10.592358') 
+[2020-03-07 10:03:21,456] {/home/pepe/Desktop/mediumPepe/medium/posts/routes.py:98} INFO - Post Post('Post Pepe', posted at '2020-03-07 10:03:10.592358') 
+[2020-03-07 10:03:22,647] {/home/pepe/Desktop/mediumPepe/medium/posts/routes.py:98} INFO - Post Post('Post Pepe', posted at '2020-03-07 10:03:10.592358') 
+[2020-03-07 10:04:35,673] {/home/pepe/Desktop/mediumPepe/medium/posts/routes.py:98} INFO - Post Post('Post Pepe', posted at '2020-03-07 10:03:10.592358') 
+[2020-03-07 10:05:43,884] {/home/pepe/Desktop/mediumPepe/medium/posts/routes.py:98} INFO - Post Post('Post Pepe', posted at '2020-03-07 10:03:10.592358') 
+[2020-03-07 10:06:00,461] {/home/pepe/Desktop/mediumPepe/medium/posts/routes.py:98} INFO - Post Post('Post Pepe', posted at '2020-03-07 10:03:10.592358') 
+[2020-03-07 10:22:54,681] {/home/pepe/Desktop/mediumPepe/medium/posts/routes.py:98} INFO - Post Post('Post Pepe', posted at '2020-03-07 10:03:10.592358') 
+[2020-03-07 10:23:05,765] {/home/pepe/Desktop/mediumPepe/medium/posts/routes.py:98} INFO - Post Post('Post Pepe', posted at '2020-03-07 10:03:10.592358') 
+[2020-03-07 10:29:26,976] {/home/pepe/Desktop/mediumPepe/medium/posts/routes.py:98} INFO - Post Post('Post Pepe', posted at '2020-03-07 10:03:10.592358') 
+[2020-03-07 10:29:36,211] {/home/pepe/Desktop/mediumPepe/medium/posts/routes.py:98} INFO - Post None 

@@ -4,6 +4,7 @@ from flask_login import current_user, login_required
 from medium import db
 from medium.models import Post
 from medium.posts.forms import PostForm
+from flask import current_app
 
 
 posts = Blueprint('posts', __name__)
@@ -61,3 +62,43 @@ def delete_post(post_id):
     flash('Post deleted!', 'success')
     return redirect(url_for('main.home'))
 
+
+@posts.route("/post/<int:post_id>/share", methods=['GET', 'POST'])
+def share_post(post_id):
+    post = Post.query.get_or_404(post_id)
+    if post.author != current_user:
+        abort(403)
+    token = post.get_shared_token()
+    post.shared_token = token
+    db.session.commit()#No necesitamos hacer un add ya que estamos trabajando sobre un post ya creado
+    flash('Shared link created!', 'success')
+    return redirect(url_for('posts.post', post_id=post.id))
+
+
+@posts.route("/post/<int:post_id>/disallow", methods=['GET', 'POST'])
+def disallow_post(post_id):
+    post = Post.query.get_or_404(post_id)
+    if post.author != current_user:
+        abort(403)
+    if post.shared_token:
+        post.shared_token = None
+        db.session.commit()#No necesitamos hacer un add ya que estamos trabajando sobre un post ya creado
+        flash('Shared link removed!', 'success')
+    else:
+        flash('This post was not shared', 'info')
+    return redirect(url_for('posts.post', post_id=post.id))
+
+
+@posts.route("/post/<token>", methods=['GET', 'POST'])
+def token_share_post(token):
+    if current_user.is_authenticated:
+        flash('You are already logged in, no need to use this link to see the post', 'info')
+        return redirect(url_for('main.home'))
+    post = Post.verify_shared_token(token)
+    current_app.logger.info('Post %s ', post)
+    if post is None or post.shared_token is None: #IMPORTANTE el "post.shared_token is None", para que un usuario no se pude guardar el enlace de compartr y verlo cuando quiera
+        flash('That is an invalid or expired token', 'danger')
+        return redirect(url_for('users.login'))
+    else:
+        flash('Post shown thanks to a shared link', 'info')
+        return render_template('post.html', title=post.title, post=post)

@@ -4,7 +4,7 @@ from flask_mail import Message
 from PIL import Image
 from flask import url_for, current_app
 from medium import mail
-from flask import current_app
+
 
 
 

@@ -6,6 +6,7 @@ from medium.users.forms import (RegistrationForm, LoginForm, UpdateAccountForm,
                                    RequestResetForm, ResetPasswordForm)
 from medium.users.utils import save_picture, send_reset_email, deleteUsersPosts, send_confirmation_email
 
+from flask import current_app
 
 import onetimepass
 import pyqrcode
@@ -39,32 +40,40 @@ def register():
 #Para loguerase mediante el usuario y la contraseña. Guarda el estado anterior
 @users.route("/login", methods=['GET', 'POST'])
 def login():
+    
     if current_user.is_authenticated:
         return redirect(url_for('main.home'))
     loginForm = LoginForm()
     if loginForm.validate_on_submit():
         user = User.query.filter_by(username=loginForm.username.data).first()
-        if user and bcrypt.check_password_hash(user.password, loginForm.password.data) \
-            and user.verify_totp(loginForm.token.data):
+        if user and bcrypt.check_password_hash(user.password, loginForm.password.data):
+            '''and user.verify_totp(loginForm.token.data)'''
             if user.confirmed:
                 login_user(user, remember=loginForm.remember.data)
                 next_page = request.args.get('next')
                 if next_page:
                     flash(f'Welcome to Social Medium {user.username}', 'success')
+                    current_app.logger.info('El usuario %s se ha logeado', user.username)
                     return redirect(next_page)
                 else:
                     flash(f'Welcome to Social Medium {user.username}', 'success')
+                    current_app.logger.info('El usuario %s se ha logeado', user.username)
                     return redirect(url_for('main.home'))
             else:
                 flash('Please verify your account via email', 'warning')
+                current_app.logger.info('Intento de inicio de sesion sin cuenta validad por el usuario %s ', loginForm.username.data)
         else:
             flash('Login Unsuccessful. Please try again', 'warning')
+            current_app.logger.warning('Inicio de sesión fallido mediante el usuario %s ', loginForm.username.data)
+            current_app.logger.warning('%s  %s %s', request.remote_addr, request.headers.get('User-Agent'), request.cache_control)
     return render_template('login.html', title='Login', form=loginForm)
 
 #Para hacer el logout del actual usuario
 @users.route("/logout")
 def logout():
-    logout_user()
+    if current_user.is_authenticated:
+        current_app.logger.info('El usuario %s ha cerrado sesion', current_user.username)
+        logout_user()
     return redirect(url_for('main.home'))
 
 
