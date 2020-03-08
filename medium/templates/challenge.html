@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="content-section">
+    <form method="POST" action="">
+        {{ form.hidden_tag() }}
+        <fieldset class="form-group">
+            <legend class="border-bottom mb-3">Reset Password</legend>
+            <div class="form-group">
+                {{ form.personalPosts.label(class="form-control-label") }}
+                {% if form.personalPosts.errors %}
+                {{ form.personalPosts(class="form-control is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in form.personalPosts.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+                {% else %}
+                {{ form.personalPosts(class="form-control") }}
+                {% endif %}
+            </div>
+            <div class="form-group">
+                {{ form.registrationMonth.label(class="form-control-label") }}
+                {% if form.registrationMonth.errors %}
+                {{ form.registrationMonth(class="form-control is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in form.registrationMonth.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+                {% else %}
+                {{ form.registrationMonth(class="form-control") }}
+                {% endif %}
+            </div>
+            <div class="form-group">
+                {{ form.registrationYear.label(class="form-control-label") }}
+                {% if form.registrationYear.errors %}
+                {{ form.registrationYear(class="form-control is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in form.registrationYear.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+                {% else %}
+                {{ form.registrationYear(class="form-control") }}
+                {% endif %}
+            </div>
+            <div class="form-group">
+                {{ form.token.label(class="form-control-label") }}
+                {% if form.token.errors %}
+                {{ form.token(class="form-control is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in form.token.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+                {% else %}
+                {{ form.token(class="form-control") }}
+                {% endif %}
+            </div>
+        </fieldset>
+        <div class="alert alert-warning" role="alert">Note: To make sure that it is really you who wants to change the password, and your email has not been compromised, we will need you to answer some questions that only you know, or enter the authentication code, before sending the reset password email.</div>
+        <div class="form-group">
+            {{ form.submit(class="btn btn-primary mb-2") }}
+        </div>
+    </form>
+</div>
+{% endblock content %}

@@ -24,3 +24,90 @@
 [2020-03-07 15:35:10,265] {/home/pepe/Desktop/mediumPepe/medium/users/routes.py:63} INFO - Intento de inicio de sesion sin cuenta validad por el usuario root 
 [2020-03-07 15:35:37,985] {/home/pepe/Desktop/mediumPepe/medium/users/routes.py:59} INFO - El usuario root se ha logeado
 [2020-03-08 10:14:22,314] {/home/pepe/Desktop/mediumPepe/medium/users/routes.py:59} INFO - El usuario pepe se ha logeado
+[2020-03-08 10:22:10,325] {/home/pepe/Desktop/mediumPepe/medium/users/routes.py:74} INFO - El usuario pepe ha cerrado sesion
+[2020-03-08 10:53:14,687] {/home/pepe/Desktop/mediumPepe/medium/users/routes.py:59} INFO - El usuario pepe se ha logeado
+[2020-03-08 11:57:15,143] {/home/pepe/Desktop/mediumPepe/medium/users/routes.py:59} INFO - El usuario pepe se ha logeado
+[2020-03-08 11:57:19,688] {/home/pepe/Desktop/mediumPepe/medium/users/routes.py:74} INFO - El usuario pepe ha cerrado sesion
+[2020-03-08 11:58:59,088] {/home/pepe/Desktop/mediumPepe/medium/users/routes.py:59} INFO - El usuario root se ha logeado
+[2020-03-08 11:59:02,622] {/home/pepe/Desktop/mediumPepe/medium/users/routes.py:74} INFO - El usuario root ha cerrado sesion
+[2020-03-08 12:15:14,173] {/home/pepe/Desktop/mediumPepe/medium/users/routes.py:201} INFO - El answer 0 se ha logeado
+[2020-03-08 12:15:14,174] {/home/pepe/Desktop/mediumPepe/medium/users/routes.py:202} INFO - El real 0 se ha logeado
+[2020-03-08 12:15:14,174] {/home/pepe/Desktop/mediumPepe/medium/users/routes.py:203} INFO - El user User('pepe', with email 'pepesifre@gmail.com', and photo 'default.jpg') se ha logeado
+[2020-03-08 12:15:57,807] {/home/pepe/Desktop/mediumPepe/medium/users/routes.py:201} INFO - El answer 0 se ha logeado
+[2020-03-08 12:15:57,808] {/home/pepe/Desktop/mediumPepe/medium/users/routes.py:202} INFO - El real 0 se ha logeado
+[2020-03-08 12:15:57,808] {/home/pepe/Desktop/mediumPepe/medium/users/routes.py:203} INFO - El user User('pepe', with email 'pepesifre@gmail.com', and photo 'default.jpg') se ha logeado
+[2020-03-08 12:18:02,064] {/home/pepe/Desktop/mediumPepe/medium/users/routes.py:201} INFO - El answer a se ha logeado
+[2020-03-08 12:18:02,065] {/home/pepe/Desktop/mediumPepe/medium/users/routes.py:202} INFO - El real 0 se ha logeado
+[2020-03-08 12:18:02,066] {/home/pepe/Desktop/mediumPepe/medium/users/routes.py:203} INFO - El user User('pepe', with email 'pepesifre@gmail.com', and photo 'default.jpg') se ha logeado
+[2020-03-08 12:18:08,677] {/home/pepe/Desktop/mediumPepe/medium/users/routes.py:201} INFO - El answer 0 se ha logeado
+[2020-03-08 12:18:08,677] {/home/pepe/Desktop/mediumPepe/medium/users/routes.py:202} INFO - El real 0 se ha logeado
+[2020-03-08 12:18:08,677] {/home/pepe/Desktop/mediumPepe/medium/users/routes.py:203} INFO - El user User('pepe', with email 'pepesifre@gmail.com', and photo 'default.jpg') se ha logeado
+[2020-03-08 12:18:44,660] {/home/pepe/Desktop/mediumPepe/medium/users/routes.py:66} WARNING - Inicio de sesión fallido mediante el usuario pepe 
+[2020-03-08 12:18:44,660] {/home/pepe/Desktop/mediumPepe/medium/users/routes.py:67} WARNING - 127.0.0.1  Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.122 Safari/537.36 max-age=0
+[2020-03-08 12:18:47,760] {/home/pepe/Desktop/mediumPepe/medium/users/routes.py:59} INFO - El usuario pepe se ha logeado
+[2020-03-08 12:27:52,307] {/home/pepe/Desktop/mediumPepe/medium/users/routes.py:74} INFO - El usuario pepe ha cerrado sesion
+[2020-03-08 12:29:09,680] {/home/pepe/Desktop/mediumPepe/medium/users/routes.py:201} INFO - El answer 0 se ha logeado
+[2020-03-08 12:29:09,681] {/home/pepe/Desktop/mediumPepe/medium/users/routes.py:202} INFO - El real 0 se ha logeado
+[2020-03-08 12:29:09,681] {/home/pepe/Desktop/mediumPepe/medium/users/routes.py:203} INFO - El user User('pepe', with email 'pepesifre@gmail.com', and photo 'default.jpg') se ha logeado
+[2020-03-08 13:57:13,058] {/home/pepe/Desktop/mediumPepe/medium/users/routes.py:65} WARNING - Inicio de sesión fallido mediante el usuario pepe 
+[2020-03-08 13:57:13,059] {/home/pepe/Desktop/mediumPepe/medium/users/routes.py:66} WARNING - 127.0.0.1  Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.122 Safari/537.36 max-age=0
+[2020-03-08 13:57:16,942] {/home/pepe/Desktop/mediumPepe/medium/users/routes.py:58} INFO - El usuario pepe se ha logeado
+[2020-03-08 13:57:24,591] {/home/pepe/Desktop/mediumPepe/medium/users/routes.py:73} INFO - El usuario pepe ha cerrado sesion
+[2020-03-08 13:57:41,809] {/home/pepe/Desktop/mediumPepe/medium/users/routes.py:65} WARNING - Inicio de sesión fallido mediante el usuario pepe 
+[2020-03-08 13:57:41,809] {/home/pepe/Desktop/mediumPepe/medium/users/routes.py:66} WARNING - 127.0.0.1  Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.122 Safari/537.36 max-age=0
+[2020-03-08 13:57:46,493] {/home/pepe/Desktop/mediumPepe/medium/users/routes.py:65} WARNING - Inicio de sesión fallido mediante el usuario pepe 
+[2020-03-08 13:57:46,494] {/home/pepe/Desktop/mediumPepe/medium/users/routes.py:66} WARNING - 127.0.0.1  Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.122 Safari/537.36 max-age=0
+[2020-03-08 13:57:51,258] {/home/pepe/Desktop/mediumPepe/medium/users/routes.py:58} INFO - El usuario pepe se ha logeado
+[2020-03-08 13:57:59,328] {/home/pepe/Desktop/mediumPepe/medium/users/routes.py:73} INFO - El usuario pepe ha cerrado sesion
+[2020-03-08 13:58:55,309] {/home/pepe/Desktop/mediumPepe/medium/users/routes.py:200} INFO - El answer 0 se ha logeado
+[2020-03-08 13:58:55,309] {/home/pepe/Desktop/mediumPepe/medium/users/routes.py:201} INFO - El real 0 se ha logeado
+[2020-03-08 13:58:55,309] {/home/pepe/Desktop/mediumPepe/medium/users/routes.py:202} INFO - El user User('pepe', with email 'pepesifre@gmail.com', and photo 'default.jpg') se ha logeado
+[2020-03-08 14:00:18,761] {/home/pepe/Desktop/mediumPepe/medium/users/routes.py:200} INFO - El answer 0 se ha logeado
+[2020-03-08 14:00:18,761] {/home/pepe/Desktop/mediumPepe/medium/users/routes.py:201} INFO - El real 0 se ha logeado
+[2020-03-08 14:00:18,762] {/home/pepe/Desktop/mediumPepe/medium/users/routes.py:202} INFO - El user User('pepe', with email 'pepesifre@gmail.com', and photo 'default.jpg') se ha logeado
+[2020-03-08 14:30:41,822] {/home/pepe/Desktop/mediumPepe/medium/users/routes.py:200} INFO - El answer 0 se ha logeado
+[2020-03-08 14:30:41,822] {/home/pepe/Desktop/mediumPepe/medium/users/routes.py:201} INFO - El real 0 se ha logeado
+[2020-03-08 14:30:41,823] {/home/pepe/Desktop/mediumPepe/medium/users/routes.py:202} INFO - El user User('pepe', with email 'pepesifre@gmail.com', and photo 'default.jpg') se ha logeado
+[2020-03-08 14:30:41,824] {/home/pepe/Desktop/mediumPepe/medium/users/routes.py:203} INFO - El user 2020 se ha logeado
+[2020-03-08 14:31:41,579] {/home/pepe/Desktop/mediumPepe/medium/users/routes.py:200} INFO - El answer 0 se ha logeado
+[2020-03-08 14:31:41,580] {/home/pepe/Desktop/mediumPepe/medium/users/routes.py:201} INFO - El real 0 se ha logeado
+[2020-03-08 14:31:41,580] {/home/pepe/Desktop/mediumPepe/medium/users/routes.py:202} INFO - El user User('pepe', with email 'pepesifre@gmail.com', and photo 'default.jpg') se ha logeado
+[2020-03-08 14:31:41,581] {/home/pepe/Desktop/mediumPepe/medium/users/routes.py:203} INFO - El user 2020 se ha logeado
+[2020-03-08 14:41:34,597] {/home/pepe/Desktop/mediumPepe/medium/users/routes.py:198} INFO - El user User('pepe', with email 'pepesifre@gmail.com', and photo 'default.jpg') se ha logeado
+[2020-03-08 14:41:34,599] {/home/pepe/Desktop/mediumPepe/medium/users/routes.py:199} INFO - El user 2020 se ha logeado
+[2020-03-08 14:42:23,177] {/home/pepe/Desktop/mediumPepe/medium/users/routes.py:198} INFO - El user User('pepe', with email 'pepesifre@gmail.com', and photo 'default.jpg') se ha logeado
+[2020-03-08 14:42:23,178] {/home/pepe/Desktop/mediumPepe/medium/users/routes.py:199} INFO - El user 2020 se ha logeado
+[2020-03-08 14:42:28,684] {/home/pepe/Desktop/mediumPepe/medium/users/routes.py:198} INFO - El user User('pepe', with email 'pepesifre@gmail.com', and photo 'default.jpg') se ha logeado
+[2020-03-08 14:42:28,685] {/home/pepe/Desktop/mediumPepe/medium/users/routes.py:199} INFO - El user 2020 se ha logeado
+[2020-03-08 14:43:07,397] {/home/pepe/Desktop/mediumPepe/medium/users/routes.py:198} INFO - El user User('pepe', with email 'pepesifre@gmail.com', and photo 'default.jpg') se ha logeado
+[2020-03-08 14:43:07,398] {/home/pepe/Desktop/mediumPepe/medium/users/routes.py:199} INFO - El user 2020 se ha logeado
+[2020-03-08 14:43:38,663] {/home/pepe/Desktop/mediumPepe/medium/users/routes.py:198} INFO - El user User('pepe', with email 'pepesifre@gmail.com', and photo 'default.jpg') se ha logeado
+[2020-03-08 14:43:38,664] {/home/pepe/Desktop/mediumPepe/medium/users/routes.py:199} INFO - El user 2020 se ha logeado
+[2020-03-08 14:43:40,759] {/home/pepe/Desktop/mediumPepe/medium/users/routes.py:198} INFO - El user User('pepe', with email 'pepesifre@gmail.com', and photo 'default.jpg') se ha logeado
+[2020-03-08 14:43:40,760] {/home/pepe/Desktop/mediumPepe/medium/users/routes.py:199} INFO - El user 2020 se ha logeado
+[2020-03-08 14:43:41,624] {/home/pepe/Desktop/mediumPepe/medium/users/routes.py:198} INFO - El user User('pepe', with email 'pepesifre@gmail.com', and photo 'default.jpg') se ha logeado
+[2020-03-08 14:43:41,625] {/home/pepe/Desktop/mediumPepe/medium/users/routes.py:199} INFO - El user 2020 se ha logeado
+[2020-03-08 14:53:18,837] {/home/pepe/Desktop/mediumPepe/medium/users/routes.py:198} INFO - El user User('pepe', with email 'pepesifre@gmail.com', and photo 'default.jpg') se ha logeado
+[2020-03-08 14:53:18,837] {/home/pepe/Desktop/mediumPepe/medium/users/routes.py:199} INFO - El user 2020 se ha logeado
+[2020-03-08 14:53:18,838] {/home/pepe/Desktop/mediumPepe/medium/users/routes.py:201} INFO - AA
+[2020-03-08 14:54:23,581] {/home/pepe/Desktop/mediumPepe/medium/users/routes.py:198} INFO - El user User('pepe', with email 'pepesifre@gmail.com', and photo 'default.jpg') se ha logeado
+[2020-03-08 14:54:23,582] {/home/pepe/Desktop/mediumPepe/medium/users/routes.py:199} INFO - El user 2020 se ha logeado
+[2020-03-08 14:54:23,582] {/home/pepe/Desktop/mediumPepe/medium/users/routes.py:221} INFO - EE
+[2020-03-08 15:00:04,375] {/home/pepe/Desktop/mediumPepe/medium/users/routes.py:198} INFO - El user User('pepe', with email 'pepesifre@gmail.com', and photo 'default.jpg') se ha logeado
+[2020-03-08 15:00:04,376] {/home/pepe/Desktop/mediumPepe/medium/users/routes.py:199} INFO - El user 2020 se ha logeado
+[2020-03-08 15:00:04,377] {/home/pepe/Desktop/mediumPepe/medium/users/routes.py:219} INFO - EE
+[2020-03-08 15:01:52,146] {/home/pepe/Desktop/mediumPepe/medium/users/routes.py:198} INFO - El user User('pepe', with email 'pepesifre@gmail.com', and photo 'default.jpg') se ha logeado
+[2020-03-08 15:01:52,147] {/home/pepe/Desktop/mediumPepe/medium/users/routes.py:199} INFO - El user 2020 se ha logeado
+[2020-03-08 15:01:52,147] {/home/pepe/Desktop/mediumPepe/medium/users/routes.py:201} INFO - AA
+[2020-03-08 15:01:52,148] {/home/pepe/Desktop/mediumPepe/medium/users/routes.py:202} INFO - 03
+[2020-03-08 15:01:52,157] {/home/pepe/Desktop/mediumPepe/medium/users/routes.py:219} INFO - EE
+[2020-03-08 15:02:38,023] {/home/pepe/Desktop/mediumPepe/medium/users/routes.py:198} INFO - El user User('root', with email 'perez_sifre@hotmail.com', and photo 'default.jpg') se ha logeado
+[2020-03-08 15:02:38,023] {/home/pepe/Desktop/mediumPepe/medium/users/routes.py:199} INFO - El user 2020 se ha logeado
+[2020-03-08 15:02:38,024] {/home/pepe/Desktop/mediumPepe/medium/users/routes.py:212} INFO - CC
+[2020-03-08 15:03:36,991] {/home/pepe/Desktop/mediumPepe/medium/users/routes.py:198} INFO - El user User('root', with email 'perez_sifre@hotmail.com', and photo 'default.jpg') se ha logeado
+[2020-03-08 15:03:36,992] {/home/pepe/Desktop/mediumPepe/medium/users/routes.py:199} INFO - El user 2020 se ha logeado
+[2020-03-08 15:03:36,993] {/home/pepe/Desktop/mediumPepe/medium/users/routes.py:212} INFO - CC
+[2020-03-08 15:03:36,994] {/home/pepe/Desktop/mediumPepe/medium/users/routes.py:214} INFO - DD
+[2020-03-08 15:04:22,090] {/home/pepe/Desktop/mediumPepe/medium/users/routes.py:65} WARNING - Inicio de sesión fallido mediante el usuario pepe 
+[2020-03-08 15:04:22,091] {/home/pepe/Desktop/mediumPepe/medium/users/routes.py:66} WARNING - 127.0.0.1  Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.122 Safari/537.36 max-age=0
+[2020-03-08 15:04:26,142] {/home/pepe/Desktop/mediumPepe/medium/users/routes.py:58} INFO - El usuario pepe se ha logeado

@@ -3,7 +3,7 @@
 from flask_wtf import FlaskForm, RecaptchaField
 from flask_wtf.file import FileField, FileAllowed
 from wtforms import StringField, PasswordField, SubmitField, BooleanField
-from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
+from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError, Optional, Regexp
 from flask_login import current_user
 from medium.models import User
 from password_strength import PasswordPolicy
@@ -71,14 +71,22 @@ class UpdateAccountForm(FlaskForm):
                 raise ValidationError('Email already in use. Choose another one.')
 
 class RequestResetForm(FlaskForm):
+    username = StringField('Username',
+                           validators=[DataRequired(), Length(min=2, max=25)])
     email = StringField('Email',
                         validators=[DataRequired(), Email()])
+    recaptcha = RecaptchaField()
     submit = SubmitField('Request Password Reset')
 
     def validate_email(self, email):
         user = User.query.filter_by(email=email.data).first()
         if user is None:
             raise ValidationError('There is no account with that email. You must register first.')
+    
+    def validate_username(self, username):
+        user = User.query.filter_by(username=username.data).first()
+        if user is None:
+            raise ValidationError('There is no account with that username. You must register first.')
 
 
 class ResetPasswordForm(FlaskForm):
@@ -86,3 +94,13 @@ class ResetPasswordForm(FlaskForm):
     confirm_password = PasswordField('Confirm Password',
                                      validators=[DataRequired(), EqualTo('password')])
     submit = SubmitField('Reset Password')
+
+class ChallengeForm(FlaskForm):
+    personalPosts = StringField('Number of personal posts that you have', validators=
+        [Optional(), Regexp('^[0-9]*$', message='Just numbers are allowed')])
+    registrationYear = StringField('Year you created your account', validators=
+        [Optional(), Regexp('^[0-9]*$', message='Just numbers are allowed'), Length(4, 4, message='Year must have 4 characters')])
+    registrationMonth = StringField('Month you created your account', validators=
+        [Optional(), Regexp('^[0-9]*$', message='Just numbers are allowed'), Length(2, 2, message='Month must have 2 characters')])
+    token = StringField('Token', validators=[Optional(), Length(6, 6, message='Token must have 6 characters')])
+    submit = SubmitField('Send answers')

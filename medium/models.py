@@ -23,6 +23,7 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(100), unique=True, nullable=False)
     image_file = db.Column(db.String(20), nullable=False, default='default.jpg')
     password = db.Column(db.String(60), nullable=False)
+    registration_date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     otp_secret = db.Column(db.String(16))
     confirmed = db.Column(db.Boolean, default=False)
     posts = db.relationship('Post', cascade="all,delete", backref='author', lazy=True)

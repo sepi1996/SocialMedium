@@ -1,19 +1,19 @@
-from flask import Blueprint, render_template, url_for, flash, redirect, request, abort, session
-from flask_login import login_user, current_user, logout_user, login_required
-from medium import db, bcrypt
-from medium.models import User, Post
-from medium.users.forms import (RegistrationForm, LoginForm, UpdateAccountForm,
-                                   RequestResetForm, ResetPasswordForm)
-from medium.users.utils import save_picture, send_reset_email, deleteUsersPosts, send_confirmation_email
-
-from flask import current_app
+import base64
+import os
+from io import BytesIO
 
 import onetimepass
 import pyqrcode
-import os
-import base64
-import onetimepass
-from io import BytesIO
+from flask import (Blueprint, abort, current_app, flash, redirect,
+                   render_template, request, session, url_for)
+from flask_login import current_user, login_required, login_user, logout_user
+from medium import bcrypt, db
+from medium.models import Post, User
+from medium.users.forms import (ChallengeForm, LoginForm, RegistrationForm,
+                                RequestResetForm, ResetPasswordForm,
+                                UpdateAccountForm)
+from medium.users.utils import (deleteUsersPosts, save_picture,
+                                send_confirmation_email, send_reset_email)
 
 users = Blueprint('users', __name__)
 
@@ -45,8 +45,7 @@ def login():
     loginForm = LoginForm()
     if loginForm.validate_on_submit():
         user = User.query.filter_by(username=loginForm.username.data).first()
-        if user and bcrypt.check_password_hash(user.password, loginForm.password.data):
-            '''and user.verify_totp(loginForm.token.data)'''
+        if user and bcrypt.check_password_hash(user.password, loginForm.password.data) and user.verify_totp(loginForm.token.data):
             if user.confirmed:
                 login_user(user, remember=loginForm.remember.data)
                 next_page = request.args.get('next')
@@ -172,13 +171,57 @@ def reset_request():
     if current_user.is_authenticated:
         flash('You are already logged in, no need to reset the password', 'info')
         return redirect(url_for('main.home'))
-    resertForm = RequestResetForm()
-    if resertForm.validate_on_submit():
-        user = User.query.filter_by(email=resertForm.email.data).first()
-        send_reset_email(user)
-        flash('An email has been sent to reset your password.', 'info')
-        return redirect(url_for('users.login'))
-    return render_template('reset_request.html', title='Reset Password', form=resertForm)
+    resetForm = RequestResetForm()
+    if resetForm.validate_on_submit():
+        user = User.query.filter_by(username=resetForm.username.data).first()
+        email = User.query.filter_by(email=resetForm.email.data).first()
+        if user != email:
+            flash('That username does not belong to that email', 'danger')
+            return redirect(url_for('main.home'))
+        session['username'] = user.username
+        flash('Answer correctly the personal cuestions or the authentication code for a reset email', 'info')
+        return redirect(url_for('users.challenge'))
+    return render_template('reset_request.html', title='Reset Password', form=resetForm)
+
+
+@users.route("/challenge", methods=['GET', 'POST'])
+def challenge():
+    if 'username' not in session:
+        #DUDA:ESTO ESTA BIEN O ES MEJOR UN ABORT?
+        #DUDA: COMO CIFRAR POSTS PERSONALES DE UN USUARIO
+        return redirect(url_for('main.home'))
+    user = User.query.filter_by(username=session['username']).first()
+    if user is None:
+        return redirect(url_for('main.home'))
+    challengeForm = ChallengeForm()
+    if challengeForm.validate_on_submit():
+        current_app.logger.info('El user %s se ha logeado', user)
+        current_app.logger.info('El user %s se ha logeado', user.registration_date.year)
+        if challengeForm.personalPosts.data and challengeForm.registrationMonth.data and challengeForm.registrationYear.data:
+            current_app.logger.info('AA')
+            current_app.logger.info('%s', challengeForm.registrationMonth.data)
+            if ((int(challengeForm.personalPosts.data ) == int(Post.query.filter_by(post_type='1').filter_by(author=user).count())) \
+                and (user.registration_date.year == int(challengeForm.registrationYear.data)) \
+                and (user.registration_date.month == int(challengeForm.registrationMonth.data))):
+                    current_app.logger.info('BB')
+                    send_reset_email(user)
+                    del session['username']
+                    flash('An email has been sent to reset your password.', 'info')
+                    return redirect(url_for('users.login'))
+        if challengeForm.token.data:
+            current_app.logger.info('CC')
+            if user.verify_totp(challengeForm.token.data):
+                current_app.logger.info('DD')
+                send_reset_email(user)
+                del session['username']
+                flash('An email has been sent to reset your password.', 'info')
+                return redirect(url_for('users.login'))
+        current_app.logger.info('EE')
+        del session['username']
+        flash('Reto no superado', 'danger')
+        return redirect(url_for('main.home'))
+    return render_template('challenge.html', title='Challenge reset', form=challengeForm)
+
 
 @users.route("/reset_password/<token>", methods=['GET', 'POST'])
 def reset_token(token):
