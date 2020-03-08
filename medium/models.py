@@ -69,7 +69,7 @@ class Post(db.Model):
     date_posted = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     content = db.Column(db.Text, nullable=False)
     #Por defecto privado, para mejorar la privacidad
-    public = db.Column(db.Boolean, nullable=False, default=False)
+    post_type = db.Column(db.String(1), nullable=False, default='0')
     shared_token = db.Column(db.String(512), nullable=True)#Por defecto, default=NULL
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
@@ -78,6 +78,13 @@ class Post(db.Model):
         return s.dumps({'post_id': self.id}).decode('utf-8')#Esto nos devuelve el token a partir de la clave secreta, para ello le 
         #pasamos como payload un identificador en este caso un diccionario con el id del usuario, que mas tarde mediante loads, sera 
         # decodifiaco de nuevo
+    '''
+    def get_post_type(self):
+        return self.__post_type
+
+    def set_post_type(self, post_type):
+        self.__post_type = post_type
+    '''
 
     @staticmethod
     def verify_shared_token(token):

@@ -1,27 +1,6 @@
 {% extends "base.html" %}
-{% block search %}
-
-<form method="POST" action="">
-  {{ form.hidden_tag() }}
-  <div class="form-group">
-    {{ form.post_word.label(class="form-control-label") }}
-    {% if form.post_word.errors %}
-    {{ form.post_word(class="form-control is-invalid") }}
-    <div class="invalid-feedback">
-        {% for error in form.post_word.errors %}
-        <span>{{ error }}</span>
-        {% endfor %}
-    </div>
-    {% else %}
-    {{ form.post_word(class="form-control") }}
-    {% endif %}
-</div>
-  <div class="form-group">
-    {{ form.submit(class="btn btn-primary mb-2") }}
-</div>
-</form>
-{% endblock %}
 {% block content %}
+<h3 class="mb-3">Posts taht contain {{ word }} ({{ posts.total }})</h3>
 {% for post in posts.items %}
 <article class="media content-section">
     <img class="rounded-circle account-imgSize" src="{{ url_for('static', filename='profilePictures/' + post.author.image_file) }}">
@@ -38,9 +17,9 @@
 {% for page_num in posts.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=1) %}
       {% if page_num %}
         {% if posts.page == page_num %}
-          <a class="btn btn-info mb-4" href="{{ url_for('main.home', page=page_num) }}">{{ page_num }}</a>
+          <a class="btn btn-info mb-4" href="{{ url_for('posts.post_search', word=word, page=page_num) }}">{{ page_num }}</a>
         {% else %}
-          <a class="btn btn-outline-info mb-4" href="{{ url_for('main.home', page=page_num) }}">{{ page_num }}</a>
+          <a class="btn btn-outline-info mb-4" href="{{ url_for('posts.post_search', word=word, page=page_num) }}">{{ page_num }}</a>
         {% endif %}
       {% else %}
         ...

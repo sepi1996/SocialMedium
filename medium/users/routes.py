@@ -39,8 +39,7 @@ def register():
 
 #Para loguerase mediante el usuario y la contraseña. Guarda el estado anterior
 @users.route("/login", methods=['GET', 'POST'])
-def login():
-    
+def login():  
     if current_user.is_authenticated:
         return redirect(url_for('main.home'))
     loginForm = LoginForm()
@@ -101,7 +100,69 @@ def account():
 def user_post(username):
     page = request.args.get('page', 1, type=int)
     user = User.query.filter_by(username=username).first_or_404()
+
+    if current_user.is_authenticated:
+        posts = Post.query.filter(Post.post_type!='1').filter_by(author=user)\
+            .order_by(Post.date_posted.desc()).paginate(page=page, per_page=4)
+    else:
+        posts = Post.query.filter_by(post_type='2').filter_by(author=user)\
+            .order_by(Post.date_posted.desc()).paginate(page=page, per_page=4)
+    return render_template('user_post.html', posts = posts, user=user)
+
+@users.route('/user/all/<string:username>')
+@login_required
+def user_all_post(username):
+    user = User.query.filter_by(username=username).first_or_404()
+    if user != current_user:
+        abort(403)
+    page = request.args.get('page', 1, type=int)
     posts = Post.query.filter_by(author=user)\
+            .order_by(Post.date_posted.desc()).paginate(page=page, per_page=4)
+    return render_template('user_post.html', posts = posts, user=user)
+
+@users.route('/user/public/<string:username>')
+@login_required
+def user_public_post(username):
+    user = User.query.filter_by(username=username).first_or_404()
+    if user != current_user:
+        abort(403)
+    page = request.args.get('page', 1, type=int)
+    posts = Post.query.filter_by(post_type='2').filter_by(author=user)\
+            .order_by(Post.date_posted.desc()).paginate(page=page, per_page=4)
+    return render_template('user_post.html', posts = posts, user=user)
+
+@users.route('/user/personal/<string:username>')
+@login_required
+def user_personal_post(username):
+    user = User.query.filter_by(username=username).first_or_404()
+    if user != current_user:
+        abort(403)
+    page = request.args.get('page', 1, type=int)
+    posts = Post.query.filter_by(post_type='1').filter_by(author=user)\
+            .order_by(Post.date_posted.desc()).paginate(page=page, per_page=4)
+    return render_template('user_post.html', posts = posts, user=user)
+
+
+
+@users.route('/user/users/<string:username>')
+@login_required
+def user_users_post(username):
+    user = User.query.filter_by(username=username).first_or_404()
+    if user != current_user:
+        abort(403)
+    page = request.args.get('page', 1, type=int)
+    posts = Post.query.filter(Post.post_type!='1').filter(Post.user_id != user.id)\
+            .order_by(Post.date_posted.desc()).paginate(page=page, per_page=4)
+    return render_template('user_post.html', posts = posts, user=user)
+
+@users.route('/user/private/<string:username>')
+@login_required
+def user_private_post(username):
+    user = User.query.filter_by(username=username).first_or_404()
+    if user != current_user:
+        abort(403)
+    page = request.args.get('page', 1, type=int)
+    posts = Post.query.filter_by(post_type='0').filter_by(author=user)\
             .order_by(Post.date_posted.desc()).paginate(page=page, per_page=4)
     return render_template('user_post.html', posts = posts, user=user)
 

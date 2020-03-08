@@ -3,9 +3,9 @@ from flask import (Blueprint, render_template, url_for, flash,
 from flask_login import current_user, login_required
 from medium import db
 from medium.models import Post
-from medium.posts.forms import PostForm
+from medium.posts.forms import PostForm, SearchForm
 from flask import current_app
-
+from .forms import POST_TYPE
 
 posts = Blueprint('posts', __name__)
 
@@ -17,11 +17,11 @@ def new_post():
     if postForm.validate_on_submit():
         post = Post(title = postForm.title.data,
                     content = postForm.content.data,
-                    author = current_user,
-                    public = postForm.public.data)
+                    post_type = postForm.post_type.data,
+                    author = current_user)
         db.session.add(post)
         db.session.commit()
-        flash(f'Your post {postForm.title.data} has been created', 'success')
+        flash(f'Your post {postForm.title.data} has been created', 'success')      
         return redirect(url_for('main.home'))
     return render_template('create_post.html', title='New Post', legend='New Post', form=postForm)
 
@@ -41,14 +41,30 @@ def update_post(post_id):
     if postForm.validate_on_submit():
         post.title = postForm.title.data
         post.content = postForm.content.data
+        post.post_type = postForm.post_type.data
         db.session.commit()#No necesitamos hacer un add ya que estamos trabajando sobre un post ya creado
         flash('Post updated!', 'success')
         return redirect(url_for('posts.post', post_id=post.id))
     elif request.method == 'GET':
         postForm.title.data = post.title
         postForm.content.data = post.content
+        postForm.post_type.data = postForm.post_type.data
     
     return render_template('create_post.html', title='Update Post', legend='Update Post', form=postForm)
+
+
+
+@posts.route('/post/search/<string:word>', methods=['GET', 'POST'])
+def post_search(word):
+    page = request.args.get('page', 1, type=int)
+    search = "%{}%".format(word)
+    if current_user.is_authenticated:
+        posts = Post.query.filter(Post.post_type!='1').filter(Post.title.like(search))\
+        .order_by(Post.date_posted.desc()).paginate(page=page, per_page=4)
+    else:
+        posts = Post.query.filter_by(post_type='2').filter(Post.title.like(search))\
+        .order_by(Post.date_posted.desc()).paginate(page=page, per_page=4)
+    return render_template('search_post.html', posts=posts, word=word) 
 
 
 @posts.route("/post/<int:post_id>/delete", methods=['POST'])
@@ -91,9 +107,11 @@ def disallow_post(post_id):
 
 @posts.route("/post/<token>", methods=['GET', 'POST'])
 def token_share_post(token):
+    '''
     if current_user.is_authenticated:
         flash('You are already logged in, no need to use this link to see the post', 'info')
         return redirect(url_for('main.home'))
+    '''
     post = Post.verify_shared_token(token)
     current_app.logger.info('Post %s ', post)
     if post is None or post.shared_token is None: #IMPORTANTE el "post.shared_token is None", para que un usuario no se pude guardar el enlace de compartr y verlo cuando quiera
