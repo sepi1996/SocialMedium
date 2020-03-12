@@ -46,7 +46,6 @@ class LoginForm(FlaskForm):
     username = StringField('Username',
                         validators=[DataRequired(), Length(min=2, max=25)])
     password = PasswordField('Password', validators=[DataRequired()])
-    token = StringField('Token', validators=[DataRequired(), Length(6, 6)])
     remember = BooleanField('Remember Me')
     submit = SubmitField('Login')
 
@@ -87,6 +86,11 @@ class RequestResetForm(FlaskForm):
         user = User.query.filter_by(username=username.data).first()
         if user is None:
             raise ValidationError('There is no account with that username. You must register first.')
+
+class TokenForm(FlaskForm):
+    token = StringField('Token', validators=[DataRequired(), Length(6, 6)])
+    remember = BooleanField('Remember new device')
+    submit = SubmitField('Login')
 
 
 class ResetPasswordForm(FlaskForm):

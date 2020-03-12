@@ -1,17 +1,17 @@
 #Represents something and stores it in the DB
-from medium import db, login_manager
+import base64
+import os
 from datetime import datetime
-from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
-from itsdangerous import JSONWebSignatureSerializer as InfinitSerializer
-from flask_login import UserMixin#For the users sessions
-from flask import current_app
+from io import BytesIO
 
 import onetimepass
 import pyqrcode
-import os
-import base64
-import onetimepass
-from io import BytesIO
+from flask import current_app
+from flask_login import UserMixin  # For the users sessions
+from itsdangerous import JSONWebSignatureSerializer as InfinitSerializer
+from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
+from medium import db, login_manager
+
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -27,6 +27,7 @@ class User(db.Model, UserMixin):
     otp_secret = db.Column(db.String(16))
     confirmed = db.Column(db.Boolean, default=False)
     posts = db.relationship('Post', cascade="all,delete", backref='author', lazy=True)
+    devices = db.relationship('Device', cascade="all,delete", backref='belong', lazy=True)
 
     ##Para 2FA
     def __init__(self, **kwargs):
@@ -49,7 +50,6 @@ class User(db.Model, UserMixin):
         #pasamos como payload un identificador en este caso un diccionario con el id del usuario, que mas tarde mediante loads, sera 
         # decodifiaco de nuevo
 
-    
 
     #Para comprobar la validez del token
     @staticmethod
@@ -64,6 +64,13 @@ class User(db.Model, UserMixin):
     def __repr__(self):
         return f"User('{self.username}', with email '{self.email}', and photo '{self.image_file}')"
 
+class Device(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    addr = db.Column(db.String(16), nullable=False)
+    browser = db.Column(db.String(40), nullable=True)
+    so = db.Column(db.String(40), nullable=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(100), nullable=False)

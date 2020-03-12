@@ -4,6 +4,8 @@ from flask_mail import Message
 from PIL import Image
 from flask import url_for, current_app
 from medium import mail
+from medium.models import Device
+from medium import   db
 
 
 
@@ -17,6 +19,24 @@ def send_reset_email(user):
 If you did not make this request then simply ignore this email and no changes will be made.
 '''
     mail.send(msg)
+
+
+
+def createDevice(user, request):
+    device = Device(addr = request.remote_addr,
+                    browser = request.user_agent.browser,
+                    so = request.user_agent.platform,
+                    belong = user)
+    db.session.add(device)
+    db.session.commit()
+
+def checkUserDevice(user, request):
+    device = Device.query.filter_by(addr=request.remote_addr)\
+        .filter_by(belong=user).filter_by(browser=request.user_agent.browser).filter_by(so=request.user_agent.platform).first()
+    if device is None:
+        return False
+    else:
+        return True    
 
 
 def send_confirmation_email(user):

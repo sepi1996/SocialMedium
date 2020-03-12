@@ -71,7 +71,7 @@
               <a class="nav-item nav-link navbar-brand" href="{{ url_for('users.user_users_post', username=current_user.username) }}">Users posts</a>
               <a class="nav-item nav-link navbar-brand" href="{{ url_for('users.user_all_post', username=current_user.username) }}">All your posts</a>
               <a class="nav-item nav-link navbar-brand" href="{{ url_for('users.user_public_post', username=current_user.username) }}">Your public posts</a>
-              <a class="nav-item nav-link navbar-brand" href="{{ url_for('users.user_private_post', username=current_user.username) }}">Your Private posts</a>
+              <a class="nav-item nav-link navbar-brand" href="{{ url_for('users.user_private_post', username=current_user.username) }}">Your private posts</a>
               <a class="nav-item nav-link navbar-brand" href="{{ url_for('users.user_personal_post', username=current_user.username) }}">Your personal posts</a>
               {% else %}
               <p class='text-muted'>Login to see all options.</p>

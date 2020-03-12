@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="content-section">
+    <form method="POST" action="">
+        {{ form.hidden_tag() }}
+        <fieldset class="form-group">
+            <legend class="border-bottom mb-3">Log In</legend>
+            <div class="form-group">
+                {{ form.token.label(class="form-control-label") }}
+                {% if form.token.errors %}
+                {{ form.token(class="form-control is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in form.token.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+                {% else %}
+                {{ form.token(class="form-control") }}
+                {% endif %}
+            </div>
+            <div class="form-check">
+                {{ form.remember(class="form-check-input") }}
+                {{ form.remember.label(class="form-check-label") }}
+            </div>
+        </fieldset>
+        <div class="form-group">
+            {{ form.submit(class="btn btn-primary mb-2") }}
+        </div>
+        <div class="alert alert-warning" role="alert">Caution: Ops,it looks that you are using a new untrusted device. For security reasons, you should enter the token code. If you trust this new device, plese select Remeber new device.</div>
+    </form>
+</div>
+{% endblock content %}
