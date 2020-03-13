@@ -21,7 +21,7 @@ def new_post():
                     author = current_user)
         db.session.add(post)
         db.session.commit()
-        current_app.logger.warning('[User: %s] [Message: Ha creado un nuevo post]',current_user.username)
+        current_app.logger.info('[User: %s] [Message: Ha creado un nuevo post]',current_user.username)
         flash(f'Your post {postForm.title.data} has been created', 'success')      
         return redirect(url_for('main.home'))
     return render_template('create_post.html', title='New Post', legend='New Post', form=postForm)

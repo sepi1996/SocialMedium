@@ -1,165 +1,23 @@
-[2020-03-10 14:31:38,858] {/home/pepe/Desktop/mediumPepe/medium/users/routes.py:58} INFO - El usuario root se ha logeado
-[2020-03-10 14:45:11,717] WARNING - {/home/pepe/Desktop/mediumPepe/medium/users/routes.py:65} [IP: 127.0.0.1] [Message: Inicio de sesión fallido mediante el usuario pepe]
-[2020-03-10 14:54:04,382] WARNING - {/home/pepe/Desktop/mediumPepe/medium/users/routes.py:65} [IP: 127.0.0.1] [Message: Inicio de sesión fallido mediante el usuario pepe]
-[2020-03-10 14:56:42,760] WARNING - {/home/pepe/Desktop/mediumPepe/medium/users/routes.py:65:login} [IP: 127.0.0.1] [Message: Inicio de sesión fallido mediante el usuario pepe]
-[2020-03-10 14:57:10,489] WARNING - {DIR /home/pepe/Desktop/mediumPepe/medium/users/routes.py:65:login} [IP: 127.0.0.1] [Message: Inicio de sesión fallido mediante el usuario pepe]
-[2020-03-10 14:57:36,637] WARNING - {DIR /home/pepe/Desktop/mediumPepe/medium/users/routes.py: Function65:login}Line [IP: 127.0.0.1] [Message: Inicio de sesión fallido mediante el usuario pepe]
-[2020-03-10 14:58:36,535] WARNING - {DIR /home/pepe/Desktop/mediumPepe/medium/users/routes.py: Functionlogin: Line65} [IP: 127.0.0.1] [Message: Inicio de sesión fallido mediante el usuario pepe]
-[2020-03-10 14:59:55,396] WARNING - {Dir /home/pepe/Desktop/mediumPepe/medium/users/routes.py: Function: login: Line: 65} [IP: 127.0.0.1] [Message: Inicio de sesión fallido mediante el usuario pepe]
-[2020-03-10 15:18:57,527] INFO - {Dir /home/pepe/Desktop/mediumPepe/medium/users/routes.py: Function: login Line: 59} [IP: 127.0.0.1] [Message: El usuario pepe se ha logeado]
-[2020-03-10 15:46:34,200] INFO - {Dir /home/pepe/Desktop/mediumPepe/medium/users/routes.py: Function: logout Line: 74} [User: pepe] [Message: Ha cerrado sesion]
-[2020-03-10 15:47:21,901] WARNING - {Dir /home/pepe/Desktop/mediumPepe/medium/users/routes.py: Function: login Line: 66} [IP: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.122 Safari/537.36] [Message: Inicio de sesión fallido mediante el agente root]
-[2020-03-10 15:47:21,902] WARNING - {Dir /home/pepe/Desktop/mediumPepe/medium/users/routes.py: Function: login Line: 67} [IP: 127.0.0.1] [Message: Inicio de sesión fallido mediante el usuario root]
-[2020-03-11 09:11:39,220] WARNING - {Dir /home/pepe/Desktop/mediumPepe/medium/users/routes.py: Function: login Line: 66} [IP: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.122 Safari/537.36] [Message: Inicio de sesión fallido mediante el agente root]
-[2020-03-11 09:11:39,221] WARNING - {Dir /home/pepe/Desktop/mediumPepe/medium/users/routes.py: Function: login Line: 67} [IP: linux] [Message: Inicio de sesión fallido mediante el agente root]
-[2020-03-11 09:11:39,221] WARNING - {Dir /home/pepe/Desktop/mediumPepe/medium/users/routes.py: Function: login Line: 68} [IP: chrome] [Message: Inicio de sesión fallido mediante el agente root]
-[2020-03-11 09:11:39,221] WARNING - {Dir /home/pepe/Desktop/mediumPepe/medium/users/routes.py: Function: login Line: 69} [IP: 127.0.0.1] [Message: Inicio de sesión fallido mediante el usuario root]
-[2020-03-12 09:46:19,513] WARNING - {Dir /home/pepe/Desktop/mediumPepe/medium/users/routes.py: Function: login Line: 74} [IP: 127.0.0.1] [Message: Inicio de sesión fallido mediante el usuario pepe]
-[2020-03-12 09:46:26,545] WARNING - {Dir /home/pepe/Desktop/mediumPepe/medium/users/routes.py: Function: login Line: 74} [IP: 127.0.0.1] [Message: Inicio de sesión fallido mediante el usuario pepe]
-[2020-03-12 09:48:16,765] INFO - {Dir /home/pepe/Desktop/mediumPepe/medium/users/routes.py: Function: login Line: 68} [IP: 127.0.0.1] Intento de inicio de sesion desde un nuevo dispisitivo, pasamos a token de verifiacion con el usurio root]
-[2020-03-12 09:48:44,388] INFO - {Dir /home/pepe/Desktop/mediumPepe/medium/users/routes.py: Function: login Line: 68} [IP: 127.0.0.1] Intento de inicio de sesion desde un nuevo dispisitivo, pasamos a token de verifiacion con el usurio root]
-[2020-03-12 09:49:31,501] INFO - {Dir /home/pepe/Desktop/mediumPepe/medium/users/routes.py: Function: login Line: 68} [IP: 127.0.0.1] Intento de inicio de sesion desde un nuevo dispisitivo, pasamos a token de verifiacion con el usurio root]
-[2020-03-12 09:49:57,468] INFO - {Dir /home/pepe/Desktop/mediumPepe/medium/users/routes.py: Function: login Line: 68} [IP: 127.0.0.1] Intento de inicio de sesion desde un nuevo dispisitivo, pasamos a token de verifiacion con el usurio root]
-[2020-03-12 09:49:57,478] WARNING - {Dir /home/pepe/Desktop/mediumPepe/medium/users/routes.py: Function: token Line: 98} [IP: 127.0.0.1] [Message: Inicio de sesión fallido mediante el usuario root]
-[2020-03-12 09:51:15,433] INFO - {Dir /home/pepe/Desktop/mediumPepe/medium/users/routes.py: Function: login Line: 68} [IP: 127.0.0.1] Intento de inicio de sesion desde un nuevo dispisitivo, pasamos a token de verifiacion con el usurio root]
-[2020-03-12 09:51:15,442] WARNING - {Dir /home/pepe/Desktop/mediumPepe/medium/users/routes.py: Function: token Line: 98} [IP: 127.0.0.1] [Message: Inicio de sesión fallido mediante el usuario root]
-[2020-03-12 09:51:38,807] WARNING - {Dir /home/pepe/Desktop/mediumPepe/medium/users/routes.py: Function: token Line: 98} [IP: 127.0.0.1] [Message: Inicio de sesión fallido mediante el usuario root]
-[2020-03-12 09:51:40,754] WARNING - {Dir /home/pepe/Desktop/mediumPepe/medium/users/routes.py: Function: token Line: 98} [IP: 127.0.0.1] [Message: Inicio de sesión fallido mediante el usuario root]
-[2020-03-12 09:55:22,069] INFO - {Dir /home/pepe/Desktop/mediumPepe/medium/users/routes.py: Function: register Line: 36} [User: pepea] [Message: Ha añadido correctamente un dispositivo de confianza]
-[2020-03-12 09:55:24,201] INFO - {Dir /home/pepe/Desktop/mediumPepe/medium/users/routes.py: Function: register Line: 39} [IP: 127.0.0.1] [Message: El usuario pepea se ha registrado]
-[2020-03-12 09:56:35,365] INFO - {Dir /home/pepe/Desktop/mediumPepe/medium/users/routes.py: Function: register Line: 36} [User: pepe] [Message: Ha añadido correctamente un dispositivo de confianza]
-[2020-03-12 09:56:36,802] INFO - {Dir /home/pepe/Desktop/mediumPepe/medium/users/routes.py: Function: register Line: 39} [IP: 127.0.0.1] [Message: El usuario pepe se ha registrado]
-[2020-03-12 09:57:14,174] INFO - {Dir /home/pepe/Desktop/mediumPepe/medium/users/routes.py: Function: login Line: 64} [IP: 127.0.0.1] [Message: El usuario pepe se ha logeado]
-[2020-03-12 09:57:48,585] INFO - {Dir /home/pepe/Desktop/mediumPepe/medium/users/routes.py: Function: login Line: 68} [IP: 127.0.0.1] Intento de inicio de sesion desde un nuevo dispisitivo, pasamos a token de verifiacion con el usurio pepe]
-[2020-03-12 09:57:48,598] WARNING - {Dir /home/pepe/Desktop/mediumPepe/medium/users/routes.py: Function: token Line: 98} [IP: 127.0.0.1] [Message: Inicio de sesión fallido mediante el usuario pepe]
-[2020-03-12 09:57:57,573] WARNING - {Dir /home/pepe/Desktop/mediumPepe/medium/users/routes.py: Function: token Line: 98} [IP: 127.0.0.1] [Message: Inicio de sesión fallido mediante el usuario pepe]
-[2020-03-12 10:01:23,490] INFO - {Dir /home/pepe/Desktop/mediumPepe/medium/users/routes.py: Function: login Line: 68} [IP: 127.0.0.1] Intento de inicio de sesion desde un nuevo dispisitivo, pasamos a token de verifiacion con el usurio pepe]
-[2020-03-12 10:01:23,502] WARNING - {Dir /home/pepe/Desktop/mediumPepe/medium/users/routes.py: Function: token Line: 98} [User: pepe] [Message: Ha introducido erroneamente el token de autenticacion]
-[2020-03-12 10:01:41,349] INFO - {Dir /home/pepe/Desktop/mediumPepe/medium/users/routes.py: Function: login Line: 68} [IP: 127.0.0.1] Intento de inicio de sesion desde un nuevo dispisitivo, pasamos a token de verifiacion con el usurio pepe]
-[2020-03-12 10:01:41,359] WARNING - {Dir /home/pepe/Desktop/mediumPepe/medium/users/routes.py: Function: token Line: 98} [User: pepe] [Message: Ha introducido erroneamente el token de autenticacion]
-[2020-03-12 10:09:58,699] INFO - {Dir /home/pepe/Desktop/mediumPepe/medium/users/routes.py: Function: login Line: 68} [IP: 127.0.0.1] Intento de inicio de sesion desde un nuevo dispisitivo, pasamos a token de verifiacion con el usurio pepe]
-[2020-03-12 10:11:04,819] INFO - {Dir /home/pepe/Desktop/mediumPepe/medium/users/routes.py: Function: login Line: 68} [IP: 127.0.0.1] Intento de inicio de sesion desde un nuevo dispisitivo, pasamos a token de verifiacion con el usurio pepe]
-[2020-03-12 10:11:37,187] INFO - {Dir /home/pepe/Desktop/mediumPepe/medium/users/routes.py: Function: login Line: 68} [IP: 127.0.0.1] Intento de inicio de sesion desde un nuevo dispisitivo, pasamos a token de verifiacion con el usurio pepe]
-[2020-03-12 10:13:39,464] INFO - {Dir /home/pepe/Desktop/mediumPepe/medium/users/routes.py: Function: login Line: 68} [IP: 127.0.0.1] Intento de inicio de sesion desde un nuevo dispisitivo, pasamos a token de verifiacion con el usurio root]
-[2020-03-12 10:20:24,516] ERROR - {Dir /home/pepe/Desktop/venv/lib/python3.6/site-packages/flask/app.py: Function: log_exception Line: 1891} Exception on /post/1/share [GET]
-Traceback (most recent call last):
-  File "/home/pepe/Desktop/venv/lib/python3.6/site-packages/flask/app.py", line 2446, in wsgi_app
-    response = self.full_dispatch_request()
-  File "/home/pepe/Desktop/venv/lib/python3.6/site-packages/flask/app.py", line 1951, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-  File "/home/pepe/Desktop/venv/lib/python3.6/site-packages/flask/app.py", line 1820, in handle_user_exception
-    reraise(exc_type, exc_value, tb)
-  File "/home/pepe/Desktop/venv/lib/python3.6/site-packages/flask/_compat.py", line 39, in reraise
-    raise value
-  File "/home/pepe/Desktop/venv/lib/python3.6/site-packages/flask/app.py", line 1949, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "/home/pepe/Desktop/venv/lib/python3.6/site-packages/flask/app.py", line 1935, in dispatch_request
-    return self.view_functions[rule.endpoint](**req.view_args)
-  File "/home/pepe/Desktop/mediumPepe/medium/posts/routes.py", line 86, in share_post
-    current_app.logger.info('[User: %s] [Message: Ha intenatado compartir el post %d que no es suyo]',current_user.username, post.id)
-  File "/home/pepe/Desktop/venv/lib/python3.6/site-packages/werkzeug/local.py", line 347, in __getattr__
-    return getattr(self._get_current_object(), name)
-AttributeError: 'AnonymousUserMixin' object has no attribute 'username'
-[2020-03-12 10:21:53,499] ERROR - {Dir /home/pepe/Desktop/venv/lib/python3.6/site-packages/flask/app.py: Function: log_exception Line: 1891} Exception on /post/1/share [GET]
-Traceback (most recent call last):
-  File "/home/pepe/Desktop/venv/lib/python3.6/site-packages/flask/app.py", line 2446, in wsgi_app
-    response = self.full_dispatch_request()
-  File "/home/pepe/Desktop/venv/lib/python3.6/site-packages/flask/app.py", line 1951, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-  File "/home/pepe/Desktop/venv/lib/python3.6/site-packages/flask/app.py", line 1820, in handle_user_exception
-    reraise(exc_type, exc_value, tb)
-  File "/home/pepe/Desktop/venv/lib/python3.6/site-packages/flask/_compat.py", line 39, in reraise
-    raise value
-  File "/home/pepe/Desktop/venv/lib/python3.6/site-packages/flask/app.py", line 1949, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "/home/pepe/Desktop/venv/lib/python3.6/site-packages/flask/app.py", line 1935, in dispatch_request
-    return self.view_functions[rule.endpoint](**req.view_args)
-  File "/home/pepe/Desktop/mediumPepe/medium/posts/routes.py", line 86, in share_post
-    current_app.logger.info('[User: %s] [Message: Ha intenatado compartir el post %d que no es suyo]',current_user.username, post.id)
-  File "/home/pepe/Desktop/venv/lib/python3.6/site-packages/werkzeug/local.py", line 347, in __getattr__
-    return getattr(self._get_current_object(), name)
-AttributeError: 'AnonymousUserMixin' object has no attribute 'username'
-[2020-03-12 10:25:05,526] INFO - {Dir /home/pepe/Desktop/mediumPepe/medium/users/routes.py: Function: login Line: 68} [IP: 127.0.0.1] Intento de inicio de sesion desde un nuevo dispisitivo, pasamos a token de verifiacion con el usurio root]
-[2020-03-12 10:25:25,659] INFO - {Dir /home/pepe/Desktop/mediumPepe/medium/users/routes.py: Function: token Line: 92} [IP: 127.0.0.1] [Message: El usuario root se ha logeado]
-[2020-03-12 10:25:25,795] INFO - {Dir /home/pepe/Desktop/mediumPepe/medium/users/routes.py: Function: token Line: 94} [User: root] [Message: Ha añadido correctamente un nuevo dispositivo de confianza]
-[2020-03-12 10:26:00,851] WARNING - {Dir /home/pepe/Desktop/mediumPepe/medium/users/routes.py: Function: token Line: 100} [User: root] [Message: Ha introducido erroneamente el token de autenticacion]
-[2020-03-12 10:26:17,769] INFO - {Dir /home/pepe/Desktop/mediumPepe/medium/users/routes.py: Function: login Line: 64} [IP: 127.0.0.1] [Message: El usuario root se ha logeado]
-[2020-03-12 10:29:43,884] INFO - {Dir /home/pepe/Desktop/mediumPepe/medium/users/routes.py: Function: logout Line: 112} [User: root] [Message: Ha cerrado sesion]
-[2020-03-12 10:29:50,763] INFO - {Dir /home/pepe/Desktop/mediumPepe/medium/users/routes.py: Function: login Line: 68} [IP: 127.0.0.1] Intento de inicio de sesion desde un nuevo dispisitivo, pasamos a token de verifiacion con el usurio root]
-[2020-03-12 10:30:09,042] INFO - {Dir /home/pepe/Desktop/mediumPepe/medium/users/routes.py: Function: token Line: 91} [IP: 127.0.0.1] [Message: El usuario root se ha logeado]
-[2020-03-12 10:30:12,833] INFO - {Dir /home/pepe/Desktop/mediumPepe/medium/users/routes.py: Function: logout Line: 112} [User: root] [Message: Ha cerrado sesion]
-[2020-03-12 10:30:19,032] INFO - {Dir /home/pepe/Desktop/mediumPepe/medium/users/routes.py: Function: login Line: 68} [IP: 127.0.0.1] Intento de inicio de sesion desde un nuevo dispisitivo, pasamos a token de verifiacion con el usurio root]
-[2020-03-12 10:30:24,256] INFO - {Dir /home/pepe/Desktop/mediumPepe/medium/users/routes.py: Function: token Line: 91} [IP: 127.0.0.1] [Message: El usuario root se ha logeado]
-[2020-03-12 10:30:24,381] INFO - {Dir /home/pepe/Desktop/mediumPepe/medium/users/routes.py: Function: token Line: 95} [User: root] [Message: Ha añadido correctamente un nuevo dispositivo de confianza]
-[2020-03-12 10:31:01,673] INFO - {Dir /home/pepe/Desktop/mediumPepe/medium/users/routes.py: Function: logout Line: 113} [User: root] [Message: Ha cerrado sesion]
-[2020-03-12 10:31:08,479] INFO - {Dir /home/pepe/Desktop/mediumPepe/medium/users/routes.py: Function: login Line: 64} [IP: 127.0.0.1] [Message: El usuario root se ha logeado]
-[2020-03-12 10:31:11,457] INFO - {Dir /home/pepe/Desktop/mediumPepe/medium/users/routes.py: Function: logout Line: 113} [User: root] [Message: Ha cerrado sesion]
-[2020-03-12 11:03:36,910] INFO - {Dir /home/pepe/Desktop/mediumPepe/medium/users/routes.py: Function: logout Line: 113} [User: pepe] [Message: Ha cerrado sesion]
-[2020-03-12 11:03:44,330] INFO - {Dir /home/pepe/Desktop/mediumPepe/medium/users/routes.py: Function: login Line: 64} [IP: 127.0.0.1] [Message: El usuario pepe se ha logeado]
-[2020-03-12 11:03:48,731] INFO - {Dir /home/pepe/Desktop/mediumPepe/medium/users/routes.py: Function: logout Line: 113} [User: pepe] [Message: Ha cerrado sesion]
-[2020-03-12 11:03:58,286] INFO - {Dir /home/pepe/Desktop/mediumPepe/medium/users/routes.py: Function: login Line: 68} [IP: 127.0.0.1] Intento de inicio de sesion desde un nuevo dispisitivo, pasamos a token de verifiacion con el usurio pepe]
-[2020-03-12 11:04:42,119] WARNING - {Dir /home/pepe/Desktop/mediumPepe/medium/users/routes.py: Function: token Line: 103} [User: pepe] [Message: Ha introducido erroneamente el token de autenticacion]
-[2020-03-12 11:09:54,076] WARNING - {Dir /home/pepe/Desktop/mediumPepe/medium/users/routes.py: Function: login Line: 75} [IP: 127.0.0.1] [Message: Inicio de sesión fallido mediante el usuario root]
-[2020-03-12 11:09:59,671] WARNING - {Dir /home/pepe/Desktop/mediumPepe/medium/users/routes.py: Function: login Line: 75} [IP: 127.0.0.1] [Message: Inicio de sesión fallido mediante el usuario root]
-[2020-03-12 11:10:08,519] INFO - {Dir /home/pepe/Desktop/mediumPepe/medium/users/routes.py: Function: login Line: 68} [IP: 127.0.0.1] Intento de inicio de sesion desde un nuevo dispisitivo, pasamos a token de verifiacion con el usurio root]
-[2020-03-12 11:10:24,489] WARNING - {Dir /home/pepe/Desktop/mediumPepe/medium/users/routes.py: Function: token Line: 103} [User: root] [Message: Ha introducido erroneamente el token de autenticacion]
-[2020-03-12 11:10:31,150] INFO - {Dir /home/pepe/Desktop/mediumPepe/medium/users/routes.py: Function: login Line: 68} [IP: 127.0.0.1] Intento de inicio de sesion desde un nuevo dispisitivo, pasamos a token de verifiacion con el usurio root]
-[2020-03-12 11:10:35,811] WARNING - {Dir /home/pepe/Desktop/mediumPepe/medium/users/routes.py: Function: token Line: 103} [User: root] [Message: Ha introducido erroneamente el token de autenticacion]
-[2020-03-12 11:10:41,348] INFO - {Dir /home/pepe/Desktop/mediumPepe/medium/users/routes.py: Function: login Line: 68} [IP: 127.0.0.1] Intento de inicio de sesion desde un nuevo dispisitivo, pasamos a token de verifiacion con el usurio root]
-[2020-03-12 11:11:19,856] INFO - {Dir /home/pepe/Desktop/mediumPepe/medium/users/routes.py: Function: token Line: 91} [IP: 127.0.0.1] [Message: El usuario root se ha logeado]
-[2020-03-12 11:11:24,309] INFO - {Dir /home/pepe/Desktop/mediumPepe/medium/users/routes.py: Function: logout Line: 113} [User: root] [Message: Ha cerrado sesion]
-[2020-03-12 11:11:30,778] INFO - {Dir /home/pepe/Desktop/mediumPepe/medium/users/routes.py: Function: login Line: 68} [IP: 127.0.0.1] Intento de inicio de sesion desde un nuevo dispisitivo, pasamos a token de verifiacion con el usurio root]
-[2020-03-12 11:11:39,627] INFO - {Dir /home/pepe/Desktop/mediumPepe/medium/users/routes.py: Function: token Line: 91} [IP: 127.0.0.1] [Message: El usuario root se ha logeado]
-[2020-03-12 11:11:39,758] INFO - {Dir /home/pepe/Desktop/mediumPepe/medium/users/routes.py: Function: token Line: 95} [User: root] [Message: Ha añadido correctamente un nuevo dispositivo de confianza]
-[2020-03-12 11:11:49,924] INFO - {Dir /home/pepe/Desktop/mediumPepe/medium/users/routes.py: Function: logout Line: 113} [User: root] [Message: Ha cerrado sesion]
-[2020-03-12 11:11:56,255] INFO - {Dir /home/pepe/Desktop/mediumPepe/medium/users/routes.py: Function: login Line: 64} [IP: 127.0.0.1] [Message: El usuario root se ha logeado]
-[2020-03-12 11:12:49,291] INFO - {Dir /home/pepe/Desktop/mediumPepe/medium/users/routes.py: Function: logout Line: 113} [User: root] [Message: Ha cerrado sesion]
-[2020-03-12 11:12:58,598] INFO - {Dir /home/pepe/Desktop/mediumPepe/medium/users/routes.py: Function: login Line: 68} [IP: 127.0.0.1] Intento de inicio de sesion desde un nuevo dispisitivo, pasamos a token de verifiacion con el usurio pepe]
-[2020-03-12 11:13:09,129] INFO - {Dir /home/pepe/Desktop/mediumPepe/medium/users/routes.py: Function: token Line: 91} [IP: 127.0.0.1] [Message: El usuario pepe se ha logeado]
-[2020-03-12 11:13:09,254] INFO - {Dir /home/pepe/Desktop/mediumPepe/medium/users/routes.py: Function: token Line: 95} [User: pepe] [Message: Ha añadido correctamente un nuevo dispositivo de confianza]
-[2020-03-12 11:13:23,009] WARNING - {Dir /home/pepe/Desktop/mediumPepe/medium/users/routes.py: Function: login Line: 75} [IP: 127.0.0.1] [Message: Inicio de sesión fallido mediante el usuario pepe]
-[2020-03-12 11:14:12,907] INFO - {Dir /home/pepe/Desktop/mediumPepe/medium/users/routes.py: Function: register Line: 36} [User: pepe] [Message: Ha añadido correctamente un dispositivo de confianza]
-[2020-03-12 11:14:14,878] INFO - {Dir /home/pepe/Desktop/mediumPepe/medium/users/routes.py: Function: register Line: 39} [IP: 127.0.0.1] [Message: El usuario pepe se ha registrado]
-[2020-03-12 11:14:33,720] INFO - {Dir /home/pepe/Desktop/mediumPepe/medium/users/routes.py: Function: login Line: 72} [IP: 127.0.0.1] Intento de inicio de sesion sin cuenta validad por el usuario pepe]
-[2020-03-12 11:15:02,940] INFO - {Dir /home/pepe/Desktop/mediumPepe/medium/users/routes.py: Function: login Line: 64} [IP: 127.0.0.1] [Message: El usuario pepe se ha logeado]
-[2020-03-12 11:15:53,528] INFO - {Dir /home/pepe/Desktop/mediumPepe/medium/users/routes.py: Function: register Line: 36} [User: pepe] [Message: Ha añadido correctamente un dispositivo de confianza]
-[2020-03-12 11:15:55,235] INFO - {Dir /home/pepe/Desktop/mediumPepe/medium/users/routes.py: Function: register Line: 39} [IP: 127.0.0.1] [Message: El usuario pepe se ha registrado]
-[2020-03-12 11:17:15,297] INFO - {Dir /home/pepe/Desktop/mediumPepe/medium/users/routes.py: Function: login Line: 64} [IP: 127.0.0.1] [Message: El usuario pepe se ha logeado]
-[2020-03-12 11:27:14,308] INFO - {Dir /home/pepe/Desktop/mediumPepe/medium/users/routes.py: Function: logout Line: 113} [User: pepe] [Message: Ha cerrado sesion]
-[2020-03-12 11:27:23,245] INFO - {Dir /home/pepe/Desktop/mediumPepe/medium/users/routes.py: Function: login Line: 68} [IP: 127.0.0.1] Intento de inicio de sesion desde un nuevo dispisitivo, pasamos a token de verifiacion con el usurio pepe]
-[2020-03-12 11:27:42,235] WARNING - {Dir /home/pepe/Desktop/mediumPepe/medium/users/routes.py: Function: token Line: 103} [User: pepe] [Message: Ha introducido erroneamente el token de autenticacion]
-[2020-03-12 11:27:53,107] INFO - {Dir /home/pepe/Desktop/mediumPepe/medium/users/routes.py: Function: login Line: 68} [IP: 127.0.0.1] Intento de inicio de sesion desde un nuevo dispisitivo, pasamos a token de verifiacion con el usurio root]
-[2020-03-12 11:28:07,826] INFO - {Dir /home/pepe/Desktop/mediumPepe/medium/users/routes.py: Function: token Line: 91} [IP: 127.0.0.1] [Message: El usuario root se ha logeado]
-[2020-03-12 11:28:07,916] INFO - {Dir /home/pepe/Desktop/mediumPepe/medium/users/routes.py: Function: token Line: 95} [User: root] [Message: Ha añadido correctamente un nuevo dispositivo de confianza]
-[2020-03-12 11:28:13,522] INFO - {Dir /home/pepe/Desktop/mediumPepe/medium/users/routes.py: Function: logout Line: 113} [User: root] [Message: Ha cerrado sesion]
-[2020-03-12 11:28:20,157] INFO - {Dir /home/pepe/Desktop/mediumPepe/medium/users/routes.py: Function: login Line: 64} [IP: 127.0.0.1] [Message: El usuario root se ha logeado]
-[2020-03-12 11:29:18,015] INFO - {Dir /home/pepe/Desktop/mediumPepe/medium/users/routes.py: Function: logout Line: 113} [User: root] [Message: Ha cerrado sesion]
-[2020-03-12 11:29:23,278] INFO - {Dir /home/pepe/Desktop/mediumPepe/medium/users/routes.py: Function: login Line: 68} [IP: 127.0.0.1] Intento de inicio de sesion desde un nuevo dispisitivo, pasamos a token de verifiacion con el usurio root]
-[2020-03-12 11:29:40,095] INFO - {Dir /home/pepe/Desktop/mediumPepe/medium/users/routes.py: Function: token Line: 91} [IP: 127.0.0.1] [Message: El usuario root se ha logeado]
-[2020-03-12 11:29:40,176] INFO - {Dir /home/pepe/Desktop/mediumPepe/medium/users/routes.py: Function: token Line: 95} [User: root] [Message: Ha añadido correctamente un nuevo dispositivo de confianza]
-[2020-03-12 11:31:03,618] INFO - {Dir /home/pepe/Desktop/mediumPepe/medium/users/routes.py: Function: logout Line: 113} [User: root] [Message: Ha cerrado sesion]
-[2020-03-12 11:31:10,977] INFO - {Dir /home/pepe/Desktop/mediumPepe/medium/users/routes.py: Function: login Line: 68} [IP: 127.0.0.1] Intento de inicio de sesion desde un nuevo dispisitivo, pasamos a token de verifiacion con el usurio root]
-[2020-03-12 11:31:24,596] INFO - {Dir /home/pepe/Desktop/mediumPepe/medium/users/routes.py: Function: token Line: 91} [IP: 127.0.0.1] [Message: El usuario root se ha logeado]
-[2020-03-12 11:31:24,707] INFO - {Dir /home/pepe/Desktop/mediumPepe/medium/users/routes.py: Function: token Line: 95} [User: root] [Message: Ha añadido correctamente un nuevo dispositivo de confianza]
-[2020-03-12 12:32:02,892] INFO - {Dir /home/pepe/Desktop/mediumPepe/medium/users/routes.py: Function: login Line: 68} [IP: 127.0.0.1] Intento de inicio de sesion desde un nuevo dispisitivo, pasamos a token de verifiacion con el usurio pepe]
-[2020-03-12 12:32:18,809] WARNING - {Dir /home/pepe/Desktop/mediumPepe/medium/users/routes.py: Function: token Line: 103} [User: pepe] [Message: Ha introducido erroneamente el token de autenticacion]
-[2020-03-12 12:33:06,848] INFO - {Dir /home/pepe/Desktop/mediumPepe/medium/users/routes.py: Function: login Line: 68} [IP: 127.0.0.1] Intento de inicio de sesion desde un nuevo dispisitivo, pasamos a token de verifiacion con el usurio pepe]
-[2020-03-12 12:33:35,753] INFO - {Dir /home/pepe/Desktop/mediumPepe/medium/users/routes.py: Function: login Line: 68} [IP: 127.0.0.1] Intento de inicio de sesion desde un nuevo dispisitivo, pasamos a token de verifiacion con el usurio pepe]
-[2020-03-12 12:34:17,726] INFO - {Dir /home/pepe/Desktop/mediumPepe/medium/users/routes.py: Function: register Line: 33} [IP: 127.0.0.1] [Message: El usuario pepe se ha registrado]
-[2020-03-12 12:34:17,805] INFO - {Dir /home/pepe/Desktop/mediumPepe/medium/users/routes.py: Function: register Line: 36} [User: pepe] [Message: Ha añadido correctamente un dispositivo de confianza]
-[2020-03-12 12:34:20,030] INFO - {Dir /home/pepe/Desktop/mediumPepe/medium/users/routes.py: Function: register Line: 38} [User: pepe] [Message: Ha recibido el correo de confirmacion]
-[2020-03-12 12:35:15,076] INFO - {Dir /home/pepe/Desktop/mediumPepe/medium/users/routes.py: Function: login Line: 64} [IP: 127.0.0.1] [Message: El usuario pepe se ha logeado]
-[2020-03-12 12:37:19,107] WARNING - {Dir /home/pepe/Desktop/mediumPepe/medium/posts/routes.py: Function: post Line: 34} [User: pepe] [Message: Ha intenatado ver el post personal 3 que no es suyo]
-[2020-03-12 14:00:35,257] WARNING - {Dir /home/pepe/Desktop/mediumPepe/medium/posts/routes.py: Function: new_post Line: 24} [User: root] [Message: Ha creado un nuevo post]
-[2020-03-12 14:00:45,648] INFO - {Dir /home/pepe/Desktop/mediumPepe/medium/posts/routes.py: Function: share_post Line: 102} [User: root] [Message: Ha creado enlace para compartir el post 4]
-[2020-03-12 14:00:53,045] INFO - {Dir /home/pepe/Desktop/mediumPepe/medium/users/routes.py: Function: logout Line: 113} [User: pepe] [Message: Ha cerrado sesion]
-[2020-03-12 14:01:17,347] WARNING - {Dir /home/pepe/Desktop/mediumPepe/medium/posts/routes.py: Function: update_post Line: 54} [User: root] [Message: Ha modficado el post 4]
-[2020-03-12 14:01:28,236] INFO - {Dir /home/pepe/Desktop/mediumPepe/medium/posts/routes.py: Function: disallow_post Line: 117} [User: root] [Message: Ha eliminado el enlace para compartir el post 4]
-[2020-03-12 14:01:31,323] WARNING - {Dir /home/pepe/Desktop/mediumPepe/medium/posts/routes.py: Function: token_share_post Line: 134} [Ip: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:74.0) Gecko/20100101 Firefox/74.0] [Message: Ha intentado ver un post mediante un token invalido]
-[2020-03-12 14:16:07,462] INFO - {Dir /home/pepe/Desktop/mediumPepe/medium/users/routes.py: Function: logout Line: 113} [User: root] [Message: Ha cerrado sesion]
-[2020-03-12 14:18:12,492] INFO - {Dir /home/pepe/Desktop/mediumPepe/medium/users/routes.py: Function: reset_request Line: 231} [IP: 127.0.0.1] [Message: EL usuario va a proceder a las preguntas para reseteo de contraseña pepe]
-[2020-03-12 14:27:27,493] INFO - {Dir /home/pepe/Desktop/mediumPepe/medium/users/routes.py: Function: reset_request Line: 231} [IP: 127.0.0.1] [Message: EL usuario va a proceder a las preguntas para reseteo de contraseña root]
-[2020-03-12 14:30:08,672] INFO - {Dir /home/pepe/Desktop/mediumPepe/medium/users/routes.py: Function: login Line: 64} [IP: 127.0.0.1] [Message: El usuario root se ha logeado]
-[2020-03-12 14:39:41,921] INFO - {Dir /home/pepe/Desktop/mediumPepe/medium/users/routes.py: Function: reset_request Line: 231} [IP: 127.0.0.1] [Message: EL usuario va a proceder a las preguntas para reseteo de contraseña root]
-[2020-03-12 14:44:25,546] INFO - {Dir /home/pepe/Desktop/mediumPepe/medium/users/routes.py: Function: logout Line: 113} [User: root] [Message: Ha cerrado sesion]
-[2020-03-12 14:44:34,356] INFO - {Dir /home/pepe/Desktop/mediumPepe/medium/users/routes.py: Function: reset_request Line: 231} [IP: 127.0.0.1] [Message: EL usuario va a proceder a las preguntas para reseteo de contraseña pepe]
+[2020-03-12 16:41:23,873] INFO - {Dir /home/pepe/Desktop/mediumPepe/medium/users/routes.py: Function: register Line: 33} [IP: 127.0.0.1] [Message: El usuario pepe se ha registrado]
+[2020-03-12 16:41:23,984] INFO - {Dir /home/pepe/Desktop/mediumPepe/medium/users/routes.py: Function: register Line: 36} [User: pepe] [Message: Ha añadido correctamente un dispositivo de confianza]
+[2020-03-12 16:41:26,636] INFO - {Dir /home/pepe/Desktop/mediumPepe/medium/users/routes.py: Function: register Line: 38} [User: pepe] [Message: Ha recibido el correo de confirmacion]
+[2020-03-12 16:42:09,264] INFO - {Dir /home/pepe/Desktop/mediumPepe/medium/users/routes.py: Function: login Line: 72} [IP: 127.0.0.1] Intento de inicio de sesion sin cuenta validad por el usuario pepe]
+[2020-03-12 16:42:51,021] INFO - {Dir /home/pepe/Desktop/mediumPepe/medium/users/routes.py: Function: login Line: 64} [IP: 127.0.0.1] [Message: El usuario pepe se ha logeado]
+[2020-03-12 16:43:11,416] WARNING - {Dir /home/pepe/Desktop/mediumPepe/medium/posts/routes.py: Function: update_post Line: 46} [User: pepe] [Message: Ha intenatado modificar el post 2 que no es suyo]
+[2020-03-12 16:43:44,233] WARNING - {Dir /home/pepe/Desktop/mediumPepe/medium/posts/routes.py: Function: new_post Line: 24} [User: pepe] [Message: Ha creado un nuevo post]
+[2020-03-12 16:45:08,308] INFO - {Dir /home/pepe/Desktop/mediumPepe/medium/users/routes.py: Function: login Line: 68} [IP: 127.0.0.1] Intento de inicio de sesion desde un nuevo dispisitivo, pasamos a token de verifiacion con el usurio pepe]
+[2020-03-12 16:46:06,382] INFO - {Dir /home/pepe/Desktop/mediumPepe/medium/users/routes.py: Function: token Line: 99} [IP: 127.0.0.1] [Message: El usuario pepe se ha logeado]
+[2020-03-12 16:46:11,102] INFO - {Dir /home/pepe/Desktop/mediumPepe/medium/users/routes.py: Function: logout Line: 113} [User: pepe] [Message: Ha cerrado sesion]
+[2020-03-12 16:46:18,334] INFO - {Dir /home/pepe/Desktop/mediumPepe/medium/users/routes.py: Function: login Line: 68} [IP: 127.0.0.1] Intento de inicio de sesion desde un nuevo dispisitivo, pasamos a token de verifiacion con el usurio pepe]
+[2020-03-12 16:46:23,632] INFO - {Dir /home/pepe/Desktop/mediumPepe/medium/users/routes.py: Function: token Line: 94} [User: pepe] [Message: Ha añadido correctamente un nuevo dispositivo de confianza]
+[2020-03-12 16:46:23,635] INFO - {Dir /home/pepe/Desktop/mediumPepe/medium/users/routes.py: Function: token Line: 99} [IP: 127.0.0.1] [Message: El usuario pepe se ha logeado]
+[2020-03-12 16:46:27,452] INFO - {Dir /home/pepe/Desktop/mediumPepe/medium/users/routes.py: Function: logout Line: 113} [User: pepe] [Message: Ha cerrado sesion]
+[2020-03-12 16:46:34,356] INFO - {Dir /home/pepe/Desktop/mediumPepe/medium/users/routes.py: Function: login Line: 64} [IP: 127.0.0.1] [Message: El usuario pepe se ha logeado]
+[2020-03-12 16:46:43,747] INFO - {Dir /home/pepe/Desktop/mediumPepe/medium/users/routes.py: Function: logout Line: 113} [User: pepe] [Message: Ha cerrado sesion]
+[2020-03-12 16:48:49,291] INFO - {Dir /home/pepe/Desktop/mediumPepe/medium/posts/routes.py: Function: share_post Line: 102} [User: pepe] [Message: Ha creado enlace para compartir el post 5]
+[2020-03-12 16:49:58,771] WARNING - {Dir /home/pepe/Desktop/mediumPepe/medium/posts/routes.py: Function: update_post Line: 54} [User: pepe] [Message: Ha modficado el post 5]
+[2020-03-12 16:50:13,460] INFO - {Dir /home/pepe/Desktop/mediumPepe/medium/posts/routes.py: Function: disallow_post Line: 117} [User: pepe] [Message: Ha eliminado el enlace para compartir el post 5]
+[2020-03-12 16:50:16,626] WARNING - {Dir /home/pepe/Desktop/mediumPepe/medium/posts/routes.py: Function: token_share_post Line: 134} [Ip: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:74.0) Gecko/20100101 Firefox/74.0] [Message: Ha intentado ver un post mediante un token invalido]
+[2020-03-12 16:50:38,810] INFO - {Dir /home/pepe/Desktop/mediumPepe/medium/users/routes.py: Function: logout Line: 113} [User: pepe] [Message: Ha cerrado sesion]
+[2020-03-12 16:51:12,902] INFO - {Dir /home/pepe/Desktop/mediumPepe/medium/users/routes.py: Function: reset_request Line: 231} [IP: 127.0.0.1] [Message: EL usuario va a proceder a las preguntas para reseteo de contraseña pepe]
+[2020-03-12 16:54:21,393] WARNING - {Dir /home/pepe/Desktop/mediumPepe/medium/users/routes.py: Function: challenge Line: 268} [User: pepe] [Message: No ha completado las preguntas personales ni el token de seguridad]

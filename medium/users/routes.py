@@ -264,7 +264,7 @@ def challenge():
                 flash('An email has been sent to reset your password.', 'info')
                 return redirect(url_for('users.login'))
         del session['username']
-        flash('Reto no superado', 'danger')
+        flash('Worngs answers. The email will not be sent', 'danger')
         current_app.logger.warning('[User: %s] [Message: No ha completado las preguntas personales ni el token de seguridad]', user.username)
         return redirect(url_for('main.home'))
     return render_template('challenge.html', title='Challenge reset', form=challengeForm)
