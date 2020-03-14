@@ -24,8 +24,11 @@ class User(db.Model, UserMixin):
     image_file = db.Column(db.String(20), nullable=False, default='default.jpg')
     password = db.Column(db.String(60), nullable=False)
     registration_date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    ciphered_Uk = db.Column(db.String(32), nullable=False)
+    salt_Pk = db.Column(db.String(16), nullable=False)
+    iv_Uk = db.Column(db.String(16), nullable=False)
     otp_secret = db.Column(db.String(16))
-    confirmed = db.Column(db.Boolean, default=False)
+    confirmed = db.Column(db.Boolean, nullable=False, default=False)
     posts = db.relationship('Post', cascade="all,delete", backref='author', lazy=True)
     devices = db.relationship('Device', cascade="all,delete", backref='belong', lazy=True)
 
@@ -79,6 +82,7 @@ class Post(db.Model):
     #Por defecto privado, para mejorar la privacidad
     post_type = db.Column(db.String(1), nullable=False, default='0')
     shared_token = db.Column(db.String(512), nullable=True)#Por defecto, default=NULL
+    iv_post = db.Column(db.String(16), nullable=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
     def get_shared_token(self):

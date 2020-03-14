@@ -2,6 +2,7 @@ import base64
 import os
 from io import BytesIO
 
+
 import onetimepass
 import pyqrcode
 from flask import (Blueprint, abort, current_app, flash, redirect,
@@ -14,7 +15,13 @@ from medium.users.forms import (ChallengeForm, LoginForm, RegistrationForm,
                                 UpdateAccountForm, TokenForm)
 from medium.users.utils import (checkUserDevice, createDevice,
                                 deleteUsersPosts, save_picture,
-                                send_confirmation_email, send_reset_email)
+                                send_confirmation_email, send_reset_email, 
+                                aes_cbc_encrypt, aes_cbc_decrypt, generate_keys)
+
+from medium.posts.utils import decrypt_personal_post
+
+from Crypto.Protocol.KDF import PBKDF2
+
 
 users = Blueprint('users', __name__)
 
@@ -25,16 +32,20 @@ def register():
     registerForm = RegistrationForm()
     if registerForm.validate_on_submit():
         hashed_password = bcrypt.generate_password_hash(registerForm.password.data).decode('utf-8')
+        ciphered_Uk, salt_Pk, iv_Uk = generate_keys(registerForm.password.data)
         user = User(username = registerForm.username.data,
                     email = registerForm.email.data,
-                    password = hashed_password)
+                    password = hashed_password,
+                    ciphered_Uk = ciphered_Uk,
+                    salt_Pk = salt_Pk,
+                    iv_Uk = iv_Uk)
         db.session.add(user)
         db.session.commit()
         current_app.logger.info('[IP: %s] [Message: El usuario %s se ha registrado]',request.remote_addr, user.username)
         #MIRAR QUE PASA SI HAY ERROR AL CREAR EL DISPOSITIVO
         createDevice(user, request)
         current_app.logger.info('[User: %s] [Message: Ha añadido correctamente un dispositivo de confianza]', user.username)
-        send_confirmation_email(user)
+        #send_confirmation_email(user)
         current_app.logger.info('[User: %s] [Message: Ha recibido el correo de confirmacion]', user.username)
         flash(f'Your new account has been created! Please verify it within 30 minutes.', 'info')
         # redirect to the two-factor auth page, passing username in session
@@ -51,25 +62,29 @@ def login():
     if loginForm.validate_on_submit():
         user = User.query.filter_by(username=loginForm.username.data).first()
         if user and bcrypt.check_password_hash(user.password, loginForm.password.data):
-            if user.confirmed:
-                if checkUserDevice(user, request):
-                    login_user(user, remember=loginForm.remember.data)
-                    next_page = request.args.get('next')
-                    if next_page:
-                        flash(f'Welcome to Social Medium {user.username}', 'success')
-                        current_app.logger.info('[IP: %s] [Message: El usuario %s se ha logeado]',request.remote_addr, user.username)
-                        return redirect(next_page)
-                    else:
-                        flash(f'Welcome to Social Medium {user.username}', 'success')
-                        current_app.logger.info('[IP: %s] [Message: El usuario %s se ha logeado]',request.remote_addr, user.username)
-                        return redirect(url_for('main.home'))
+            #if user.confirmed:
+            if checkUserDevice(user, request):
+                login_user(user, remember=loginForm.remember.data)
+                next_page = request.args.get('next')
+                if next_page:
+                    flash(f'Welcome to Social Medium {user.username}', 'success')
+                    current_app.logger.info('[IP: %s] [Message: El usuario %s se ha logeado]',request.remote_addr, user.username)
+                    Pk = PBKDF2(loginForm.password.data, user.salt_Pk, 32, 1000)[0:16]
+                    session['Pk'] = Pk
+                    return redirect(next_page)
                 else:
-                    session['username'] = user.username
-                    current_app.logger.info('[IP: %s] Intento de inicio de sesion desde un nuevo dispisitivo, pasamos a token de verifiacion con el usurio %s]', request.remote_addr,loginForm.username.data)
-                    return redirect(url_for('users.token',  remember=loginForm.remember.data))
+                    flash(f'Welcome to Social Medium {user.username}', 'success')
+                    current_app.logger.info('[IP: %s] [Message: El usuario %s se ha logeado]',request.remote_addr, user.username)
+                    Pk = PBKDF2(loginForm.password.data, user.salt_Pk, 32, 1000)[0:16]
+                    session['Pk'] = Pk
+                    return redirect(url_for('main.home'))
             else:
-                flash('Please verify your account via email', 'warning')
-                current_app.logger.info('[IP: %s] Intento de inicio de sesion sin cuenta validad por el usuario %s]', request.remote_addr,loginForm.username.data)
+                session['username'] = user.username
+                current_app.logger.info('[IP: %s] Intento de inicio de sesion desde un nuevo dispisitivo, pasamos a token de verifiacion con el usurio %s]', request.remote_addr,loginForm.username.data)
+                return redirect(url_for('users.token',  remember=loginForm.remember.data))
+            #else:
+            #    flash('Please verify your account via email', 'warning')
+            #    current_app.logger.info('[IP: %s] Intento de inicio de sesion sin cuenta validad por el usuario %s]', request.remote_addr,loginForm.username.data)
         else:
             flash('Login Unsuccessful. Please try again', 'warning')
             current_app.logger.warning('[IP: %s] [Message: Inicio de sesión fallido mediante el usuario %s]', request.remote_addr, loginForm.username.data)
@@ -150,7 +165,7 @@ def user_post(username):
     else:
         posts = Post.query.filter_by(post_type='2').filter_by(author=user)\
             .order_by(Post.date_posted.desc()).paginate(page=page, per_page=4)
-    return render_template('user_post.html', posts = posts, user=user)
+    return render_template('user_post.html', posts = posts, user=user, post_type=user.username)
 
 #Muestra todos los posts del ususario indicado
 @users.route('/user/all/<string:username>')
@@ -160,10 +175,21 @@ def user_all_post(username):
     if user != current_user:
         current_app.logger.warning('[User: %s] [Message: Ha intentado acceder a todos posts de %s]',current_user.username, user.username)
         abort(403)
+    '''
     page = request.args.get('page', 1, type=int)
     posts = Post.query.filter_by(author=user)\
             .order_by(Post.date_posted.desc()).paginate(page=page, per_page=4)
-    return render_template('user_post.html', posts = posts, user=user)
+'''
+    if 'Pk' not in session:
+        current_app.logger.warning('[User: %s] [Message: No ha podido crear post personal, no esta la llave en la sesion]',current_user.username)
+        abort(404)
+    posts = Post.query.filter_by(author=user)\
+            .order_by(Post.date_posted.desc())
+    for post in posts:
+        if post.post_type == '1':
+            decrypt_personal_post(session['Pk'], user, post)
+
+    return render_template('personal.html', posts=posts, user=user, post_type='All your posts')
 
 #Muestra todos los posts publicos del ususario indicado
 @users.route('/user/public/<string:username>')
@@ -173,7 +199,7 @@ def user_public_post(username):
     page = request.args.get('page', 1, type=int)
     posts = Post.query.filter_by(post_type='2').filter_by(author=user)\
             .order_by(Post.date_posted.desc()).paginate(page=page, per_page=4)
-    return render_template('user_post.html', posts = posts, user=user)
+    return render_template('user_post.html', posts = posts, user=user, post_type='All your public posts')
 
 #Muestra todos los posts personales del ususario indicado
 @users.route('/user/personal/<string:username>')
@@ -183,10 +209,14 @@ def user_personal_post(username):
     if user != current_user:
         current_app.logger.warning('[User: %s] [Message: Ha intentado acceder a los posts personales de %s]',current_user.username, user.username)
         abort(403)
-    page = request.args.get('page', 1, type=int)
+    if 'Pk' not in session:
+        current_app.logger.warning('[User: %s] [Message: No ha podido crear post personal, no esta la llave en la sesion]',current_user.username)
+        abort(404)
     posts = Post.query.filter_by(post_type='1').filter_by(author=user)\
-            .order_by(Post.date_posted.desc()).paginate(page=page, per_page=4)
-    return render_template('user_post.html', posts=posts, user=user)
+            .order_by(Post.date_posted.desc())
+    for post in posts:
+        decrypt_personal_post(session['Pk'], user, post)
+    return render_template('personal.html', posts=posts, user=user, post_type='All your personal posts')
 
 
 #Para ver los posts publicos i privados de los usuarios que no eres tu
@@ -200,7 +230,7 @@ def user_users_post(username):
     page = request.args.get('page', 1, type=int)
     posts = Post.query.filter(Post.post_type!='1').filter(Post.user_id != user.id)\
             .order_by(Post.date_posted.desc()).paginate(page=page, per_page=4)
-    return render_template('user_post.html', posts=posts, user=user)
+    return render_template('user_post.html', posts=posts, user=user, post_type='Other users posts')
 
 
 #Muestra todos los posts privados del ususario indicado
@@ -211,7 +241,7 @@ def user_private_post(username):
     page = request.args.get('page', 1, type=int)
     posts = Post.query.filter_by(post_type='0').filter_by(author=user)\
             .order_by(Post.date_posted.desc()).paginate(page=page, per_page=4)
-    return render_template('user_post.html', posts = posts, user=user)
+    return render_template('user_post.html', posts = posts, user=user, post_type='All your private posts')
 
 
 @users.route("/reset_password", methods=['GET', 'POST'])
@@ -283,7 +313,13 @@ def reset_token(token):
     passwordResetform = ResetPasswordForm()
     if passwordResetform.validate_on_submit():
         hashed_password = bcrypt.generate_password_hash(passwordResetform.password.data).decode('utf-8')
+        ciphered_Uk, salt_Pk, iv_Uk = generate_keys(passwordResetform.password.data)
         user.password = hashed_password
+        user.ciphered_Uk = ciphered_Uk
+        user.salt_Pk = salt_Pk
+        user.iv_Uk = iv_Uk
+        Post.query.filter(Post.post_type == '1').filter_by(author=user).delete()
+        current_app.logger.info('[User: %s] [Message: Ha eliminado sus posts personales y renovado todas las llaves de cifrado %s]', user.username)
         db.session.commit()
         current_app.logger.info('[User: %s] [Message: Ha actualizado su contraseña %s]', user.username)
         flash('Password Updated!', 'success')
@@ -322,7 +358,6 @@ def delete_user(username):
     logout_user()
     db.session.delete(user)
     db.session.commit()
-    
     flash('User deleted!', 'success')
     return redirect(url_for('main.home'))
 

@@ -4,8 +4,12 @@ from flask_login import current_user, login_required
 from medium import db
 from medium.models import Post
 from medium.posts.forms import PostForm, SearchForm
-from flask import current_app
+from flask import current_app, session
 from .forms import POST_TYPE
+from Crypto import Random
+from Crypto.Cipher.AES import block_size, key_size
+
+from medium.posts.utils import create_personal_post, decrypt_personal_post, update_personal_post
 
 posts = Blueprint('posts', __name__)
 
@@ -15,10 +19,17 @@ posts = Blueprint('posts', __name__)
 def new_post():
     postForm = PostForm()
     if postForm.validate_on_submit():
-        post = Post(title = postForm.title.data,
-                    content = postForm.content.data,
-                    post_type = postForm.post_type.data,
-                    author = current_user)
+        if postForm.post_type.data == 1:
+            if 'Pk' not in session:
+                current_app.logger.warning('[User: %s] [Message: No ha podido crear post personal, no esta la llave en la sesion]',current_user.username)
+                abort(404)
+            else:
+                post = create_personal_post(session['Pk'], current_user, postForm)
+        else:
+            post = Post(title = postForm.title.data,
+                        content = postForm.content.data,
+                        post_type = postForm.post_type.data,
+                        author = current_user)
         db.session.add(post)
         db.session.commit()
         current_app.logger.info('[User: %s] [Message: Ha creado un nuevo post]',current_user.username)
@@ -28,14 +39,28 @@ def new_post():
 
 #Para mostrar un post en concreto
 @posts.route("/post/<int:post_id>", methods=['GET'])
-@login_required
 def post(post_id):
     post = Post.query.get_or_404(post_id)
-    if post.author != current_user and post.post_type=='1':
-        current_app.logger.warning('[User: %s] [Message: Ha intenatado ver el post personal %d que no es suyo]',current_user.username, post.id)
-        abort(403)
+    if current_user.is_authenticated:
+        if post.author != current_user and post.post_type=='1':
+            current_app.logger.warning('[User: %s] [Message: Ha intenatado ver el post personal %d que no es suyo]',current_user.username, post.id)
+            abort(403)
+        elif post.author == current_user and post.post_type=='1':
+            if 'Pk' not in session:
+                current_app.logger.warning('[User: %s] [Message: No ha podido crear post personal, no esta la llave en la sesion]',current_user.username)
+                abort(404)
+            decrypt_personal_post(session['Pk'], current_user, post)
+            return render_template('post.html', title=post.title, post=post)
+        else:
+            return render_template('post.html', title=post.title, post=post)
     else:
-        return render_template('post.html', title=post.title, post=post)
+        if post.post_type == '2':
+            return render_template('post.html', title=post.title, post=post)
+        else:
+            flash(f'You must login in to see that post', 'info') 
+            return redirect(url_for('users.login'))
+
+    
 
 #Para actualizar un post
 @posts.route("/post/<int:post_id>/update", methods=['GET', 'POST'])
@@ -47,14 +72,27 @@ def update_post(post_id):
         abort(403)
     postForm = PostForm()
     if postForm.validate_on_submit():
-        post.title = postForm.title.data
-        post.content = postForm.content.data
-        post.post_type = postForm.post_type.data
+        current_app.logger.warning('[DATAAA: %s]', postForm.post_type.data)
+        if postForm.post_type.data == 1:
+            if 'Pk' not in session:
+                current_app.logger.warning('[User: %s] [Message: No ha podido crear post personal, no esta la llave en la sesion]',current_user.username)
+                abort(404)
+            update_personal_post(session['Pk'], current_user, post, postForm)
+        else:
+            post.title = postForm.title.data
+            post.content = postForm.content.data
+            post.post_type = postForm.post_type.data
+            post.iv_post = None
         db.session.commit()#No necesitamos hacer un add ya que estamos trabajando sobre un post ya creado
         current_app.logger.warning('[User: %s] [Message: Ha modficado el post %d]',current_user.username, post.id)
         flash('Post updated!', 'success')
         return redirect(url_for('posts.post', post_id=post.id))
     elif request.method == 'GET':
+        if 'Pk' not in session:
+            current_app.logger.warning('[User: %s] [Message: No ha podido crear post personal, no esta la llave en la sesion]',current_user.username)
+            abort(404)
+        if post.post_type == '1':
+            decrypt_personal_post(session['Pk'], current_user, post)
         postForm.title.data = post.title
         postForm.content.data = post.content
         postForm.post_type.data = postForm.post_type.data

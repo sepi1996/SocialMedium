@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
-<h3 class="mb-3">Total posts ({{ posts.total }})</h3>
+<h3 class="mb-3">{{ post_type }} ({{ posts.total }})</h3>
 {% for post in posts.items %}
 <article class="media content-section">
     <img class="rounded-circle account-imgSize" src="{{ url_for('static', filename='profilePictures/' + post.author.image_file) }}">
