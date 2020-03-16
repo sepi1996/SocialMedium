@@ -30,7 +30,7 @@ If you did not make this request then simply ignore this email and no changes wi
 
 
 def createDevice(user, request):
-    device = Device(addr = request.remote_addr,
+    device = Device(addr = request.headers['X-Real-Ip'],
                     browser = request.user_agent.browser,
                     so = request.user_agent.platform,
                     belong = user)
@@ -38,7 +38,7 @@ def createDevice(user, request):
     db.session.commit()
 
 def checkUserDevice(user, request):
-    device = Device.query.filter_by(addr=request.remote_addr)\
+    device = Device.query.filter_by(addr=request.headers['X-Real-Ip'])\
         .filter_by(belong=user).filter_by(browser=request.user_agent.browser).filter_by(so=request.user_agent.platform).first()
     if device is None:
         return False

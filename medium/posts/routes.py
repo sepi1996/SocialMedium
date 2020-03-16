@@ -72,7 +72,6 @@ def update_post(post_id):
         abort(403)
     postForm = PostForm()
     if postForm.validate_on_submit():
-        current_app.logger.warning('[DATAAA: %s]', postForm.post_type.data)
         if postForm.post_type.data == 1:
             if 'Pk' not in session:
                 current_app.logger.warning('[User: %s] [Message: No ha podido crear post personal, no esta la llave en la sesion]',current_user.username)

@@ -12,7 +12,7 @@
         <a class="btn btn-primary btn-sm m-1" href="{{ url_for('posts.update_post', post_id=post.id) }}">Update</a>
         {% if post.shared_token %}
 
-          <input type="text" value=" http://127.0.0.1:5000/post/{{ post.shared_token }}" id="myInput">
+          <input type="text" value=" http://{{ SERVER_NAME1 }}:5000/post/{{ post.shared_token }}" id="myInput">
 
             <button class="btn btn-primary btn-sm m-1" onclick="myFunction()" onmouseout="outFunc()">
               <span class="tooltiptext" id="myTooltip">Copy to clipboard</span>

@@ -19,5 +19,9 @@ class Config:
 
     RECAPTCHA_PUBLIC_KEY = config.get('RECAPTCHA_PUBLIC_KEY')
     RECAPTCHA_PRIVATE_KEY = config.get('RECAPTCHA_PRIVATE_KEY')
+
+    SERVER_NAME1 = '127.0.0.1'
+
+
     #REMEMBER_COOKIE_DURATION = timedelta(minutes=1)
 

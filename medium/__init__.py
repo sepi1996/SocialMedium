@@ -21,11 +21,12 @@ def create_app(config_class=Config):
     app = Flask(__name__)
     app.config.from_object(Config)
 
-#formatter = logging.Formatter("[%(asctime)s] %(levelname)s -{Dir %(pathname)s Func: %(func)s Line: %(lineno)d} %(message)s")
+    gunicorn_logger = logging.getLogger('gunicorn.error')
+    app.logger.setLevel(gunicorn_logger.level)
+
     formatter = logging.Formatter("[%(asctime)s] %(levelname)s - {Dir %(pathname)s: Function: %(funcName)s Line: %(lineno)d} %(message)s")
     #Cuando Medium.log ocupe 10Mb se creara un nuevo log, y el antiguo pasara a ser app.log.1 hasta un máximo de 10 en este caso
     handler = RotatingFileHandler('Medium.log', maxBytes=10000000, backupCount=10)
-    logging.getLogger().setLevel(logging.INFO)
     handler.setFormatter(formatter)
     app.logger.addHandler(handler)
 
