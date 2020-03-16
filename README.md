@@ -28,12 +28,14 @@ The basic security features of this app are:
 - Trusted devices for a more secure log in
 - 2FA
 - Account activation via e-mail
+- Brute force protection
 - Secure password recovery via e-mail and personal cuestions
 - Recaptcha protection
 - Post sharing via JSON Web Signature(JWS)
 - Different views and options depending on the post type
 - Validated user inputs
 - Logging of events
+
 ![alt text](https://user-images.githubusercontent.com/18005114/76704245-272ce480-66c7-11ea-8498-7851a20faa0a.png)
 ## Requirements
 
@@ -137,7 +139,7 @@ $ sudo apt install supervisor
 ```TXT
 [program:socialMedium]
 directory=/home/socialMediumUser/SocialMedium
-command=/home/socialMediumUser/SocailMedium/venv/bin/gunicorn -w 3 run:app
+command=/home/socialMediumUser/SocailMedium/venv/bin/gunicorn -w 3 --log-level=info run:app
 user=socialMediumUser
 autostart=true
 autorestart=true
@@ -192,6 +194,7 @@ $ netstat -anpt
 ```
 
 ![alt text](https://user-images.githubusercontent.com/18005114/76700233-22efcf80-66a5-11ea-81df-718f47151185.png)
+
 - Finally, we will use HTTPS instead of HTTP, for obvious reasons. For so, we will use <a href="https://certbot.eff.org/" target="_blank">**Certbot**</a>. There you can find the exact commands you need to set up your HTTPS server. Anyway, I will left here the commands needed to install it on a `Ubuntu 18.04 LTS` with a `Nginx`
 ```shell
 $ sudo apt-get update
@@ -210,3 +213,34 @@ As a good practice, we will choose during the configuration the option, that red
 ```
 ![alt text](https://user-images.githubusercontent.com/18005114/76702094-8b937800-66b6-11ea-9430-aed88971faa8.png)
 
+- Additionally we can set up  <a href="https://www.fail2ban.org/" target="_blank">**Fail2ban**</a> which will create dinamically firewalls rules so we can prevent a brute force attack. Here I will show the basic configuration to protect the web login page against brute force attacks.
+First we will install it with:
+```shell
+sudo apt-get install fail2ban -y
+```
+And then we will add the following configuration. First:
+```shell
+$ sudo cp /etc/fail2ban/jail.conf /etc/fail2ban/jail.local
+```
+And inside the `jail.local` file we add the following jail where we we specify the filter that we will create right now, the action, the path of the log we want to inspect, the retries, when te counter will be reset to zero and the time that the IP will be banned. 
+```shell
+[nginx-login]
+enabled = true
+filter = nginx-login
+action = iptables-multiport[name=NoLoginFailures, port="http,https"]
+logpath = /var/log/nginx*/*access*.log
+maxretry = 5
+findtime = 600 
+bantime = 600 # 10 minutes
+```
+Then, we will create the `/etc/fail2ban/filter.d/nginx-login.conf` where will be set the filter rule. In this situation, where are looking for POST requests, to the login route, where the reserver responds with a status code 200, because a successful login will return a redirect status code instead of 200
+```shell
+[Definition]
+failregex = ^<HOST> -.*POST /login HTTP/1.1.* 200
+ignoreregex =
+```
+And finally we restart the service and check the jail with the following commands.
+```shell
+sudo fail2ban-client restart
+sudo fail2ban-client status nginx-login
+```
