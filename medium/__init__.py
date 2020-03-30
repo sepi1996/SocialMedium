@@ -1,25 +1,27 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-from flask_bcrypt import Bcrypt
+#from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
 from flask_mail import Mail
 from medium.config import Config
 import logging
 from logging.handlers import RotatingFileHandler
+from werkzeug.middleware.proxy_fix import ProxyFix
+
 
 db = SQLAlchemy()
-bcrypt = Bcrypt()
+#bcrypt = Bcrypt()
 login_manager = LoginManager()
 login_manager.login_view = 'users.login'
 login_manager.login_message_category = 'primary'
 mail = Mail()
 
 
-
-
 def create_app(config_class=Config):
     app = Flask(__name__)
     app.config.from_object(Config)
+    app.wsgi_app = ProxyFix(app.wsgi_app)
+    app.config['MAX_CONTENT_LENGTH'] = 10 * 1024 * 1024
 
     gunicorn_logger = logging.getLogger('gunicorn.error')
     app.logger.setLevel(gunicorn_logger.level)
@@ -32,7 +34,7 @@ def create_app(config_class=Config):
 
 
     db.init_app(app)
-    bcrypt.init_app(app)
+    #bcrypt.init_app(app)
     login_manager.init_app(app)
     mail.init_app(app)
 

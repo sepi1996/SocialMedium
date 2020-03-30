@@ -21,7 +21,7 @@ def send_reset_email(user):
     token = user.get_reset_token(expiration=1800)
     msg = Message('Password Reset for Social Medium',
                 sender='noreply@das.com', recipients=[user.email])
-    msg.body = f'''To reset your password, visit the following link: <b>hola</b>
+    msg.body = f'''To reset your password, visit the following link: 
 {url_for('users.reset_token', token=token, _external=True)}
 If you did not make this request then simply ignore this email and no changes will be made.
 '''
@@ -30,7 +30,7 @@ If you did not make this request then simply ignore this email and no changes wi
 
 
 def createDevice(user, request):
-    device = Device(addr = request.headers['X-Real-Ip'],
+    device = Device(addr = request.remote_addr,
                     browser = request.user_agent.browser,
                     so = request.user_agent.platform,
                     belong = user)
@@ -38,7 +38,7 @@ def createDevice(user, request):
     db.session.commit()
 
 def checkUserDevice(user, request):
-    device = Device.query.filter_by(addr=request.headers['X-Real-Ip'])\
+    device = Device.query.filter_by(addr=request.remote_addr)\
         .filter_by(belong=user).filter_by(browser=request.user_agent.browser).filter_by(so=request.user_agent.platform).first()
     if device is None:
         return False
@@ -50,25 +50,31 @@ def send_confirmation_email(user):
     token = user.get_reset_token(expiration=3600)
     msg = Message('Account Activation for Social Medium',
                 sender='noreply@das.com', recipients=[user.email])
-    msg.body = f'''To activate your account, visit the following link:<b>hola</b>
+    msg.body = f'''To activate your account, visit the following link:
 {url_for('users.account_activation', token=token, _external=True)}
 If you did not make this request then simply ignore this email and no changes will be made.
 '''
     mail.send(msg)    
 
 
-def save_picture(form_picture):
+def save_picture(form_picture, old_image_name, username):
     randomHex = secrets.token_hex(8)
-    _, fileExt = os.path.splitext(form_picture.filename)#El primero es _ porque no queremos almacenar ese valor devuleto por la funcion
+    _, fileExt = os.path.splitext(form_picture.filename)
     pictureFilename = randomHex + fileExt
     picturePath = os.path.join(current_app.root_path, 'static/profilePictures', pictureFilename)
-    #Redimensionamos la imagem, para no almazenar imagenes grandes que ocupan mas, sin ser necesario
     size = (115, 115)
-    newImage = Image.open(form_picture)
-    newImage.thumbnail(size)
-    newImage.save(picturePath)
-
+    try:
+        newImage = Image.open(form_picture)
+        newImage.thumbnail(size)
+        newImage.save(picturePath)
+        if old_image_name != "default.jpg": 
+            os.remove(os.path.join(current_app.root_path, 'static/profilePictures', old_image_name))
+    except IOError:
+        current_app.logger.warning('[User: %s] [Message: Ha subido un archivo incorrecto', username)
+        return old_image_name
     return pictureFilename
+
+
 
 def deleteUsersPosts(user):
     pass
@@ -80,19 +86,14 @@ def deleteUsersPosts(user):
 
 
 
-
-
 #
 #Para el cifrado.
 #
-def generate_keys(password):
+def generate_keys(Pk):
     Uk = secrets.token_bytes(32)
     iv_Uk = secrets.token_bytes(16)
-    salt_Pk = secrets.token_bytes(16)
-    Pk = PBKDF2(password, salt_Pk, 32, 1000)[0:16]
     ciphered_Uk = aes_cbc_encrypt(Uk, Pk, iv_Uk)
-    #PREGUNTAR SI ESTA BIEN
-    return ciphered_Uk, salt_Pk, iv_Uk
+    return ciphered_Uk, iv_Uk
 
 
 

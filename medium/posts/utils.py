@@ -8,7 +8,6 @@ def create_personal_post(Pk, user, postForm):
 
     Uk = aes_cbc_decrypt(user.ciphered_Uk, Pk, user.iv_Uk)
     iv_post = secrets.token_bytes(16)
-    #current_app.logger.warning('[DESCIFRADO: secret_key %s] PK %s Iv %s]',current_user.secret_key, Pk, iv_user)
     cipher_title = aes_cbc_encrypt(postForm.title.data.encode(), Uk, iv_post)
     cipher_content = aes_cbc_encrypt(postForm.content.data.encode(), Uk, iv_post)
     post = Post(title = cipher_title,

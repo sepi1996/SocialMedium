@@ -23,7 +23,7 @@ The basic features of this app are:
 ## Security
 The basic security features of this app are:
 - Use of HTTPS for secure connections
-- Secure password storage using PBKDF functions
+- Secure password storage
 - Personal posts, are stored in the DB encrypted, using different keys for each user
 - Trusted devices for a more secure log in
 - 2FA
@@ -33,6 +33,7 @@ The basic security features of this app are:
 - Recaptcha protection
 - Post sharing via JSON Web Signature(JWS)
 - Different views and options depending on the post type
+- Profile picture upload protection
 - Validated user inputs
 - Logging of events
 
@@ -51,7 +52,7 @@ All the requirements will be covered in the installation section, but in this ca
 $ git clone https://github.com/sepi1996/SocialMedium.git
 ```
 
-- If not already installed we will need pip and python virtual environments (Is recommended follow this steps with a normal user rather than the root user)
+- If not already installed we will need pip and python virtual environments (It is recommended to follow this steps with a normal user rather than the root user)
 
 ```shell
 #User creation
@@ -109,7 +110,7 @@ server{
         server_name "Our public IP address or domain name";
 
         location /static {
-                alias /home/pepe/mediumPepe/medium/static;
+                alias /home/socialMediumUser/SocailMedium/medium/static;
         }
 
         location / {

@@ -7,6 +7,7 @@ from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationE
 from flask_login import current_user
 from medium.models import User
 from password_strength import PasswordPolicy
+import safe
 
 
 class RegistrationForm(FlaskForm):
@@ -30,16 +31,9 @@ class RegistrationForm(FlaskForm):
             raise ValidationError('Email already in use. Choose another one.')
 '''
     def validate_password(self, password):
-        policy = PasswordPolicy.from_names(
-            length=8,  # min length: 8
-            uppercase=2,  # need min. 2 uppercase letters
-            numbers=1,  # need min. 2 digits
-            special=1,  # need min. 2 special characters
-            nonletters=2,  # need min. 2 non-letter characters (digits, specials, anything)
-        )
-        if policy.test(password):
-            raise ValidationError('Please create a more secure password with at least: -8 caracters.\
-                                 -2 Uppercase. -1 Number. -1 Special character. -2 Non-letter characters')
+        strength = safe.check(password.data)
+        if not bool(strength):
+            raise ValidationError(f'Password is {repr(strength)}')
 '''
 
 class LoginForm(FlaskForm):

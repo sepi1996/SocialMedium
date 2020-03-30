@@ -130,8 +130,8 @@ def delete_post(post_id):
 @login_required
 def share_post(post_id):
     post = Post.query.get_or_404(post_id)
-    if post.author != current_user:
-        current_app.logger.warning('[User: %s] [Message: Ha intenatado compartir el post %d que no es suyo]',current_user.username, post.id)
+    if post.author != current_user or post.post_type == "1":
+        current_app.logger.warning('[User: %s] [Message: Ha intenatado compartir el post sin que esto se pueda hacer %d ]',current_user.username, post.id)
         abort(403)
     token = post.get_shared_token()
     post.shared_token = token

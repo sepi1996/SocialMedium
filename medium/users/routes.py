@@ -2,13 +2,14 @@ import base64
 import os
 from io import BytesIO
 
+import bcrypt
 
 import onetimepass
 import pyqrcode
 from flask import (Blueprint, abort, current_app, flash, redirect,
                    render_template, request, session, url_for)
 from flask_login import current_user, login_required, login_user, logout_user
-from medium import bcrypt, db
+from medium import db
 from medium.models import Post, User
 from medium.users.forms import (ChallengeForm, LoginForm, RegistrationForm,
                                 RequestResetForm, ResetPasswordForm,
@@ -20,7 +21,6 @@ from medium.users.utils import (checkUserDevice, createDevice,
 
 from medium.posts.utils import decrypt_personal_post
 
-from Crypto.Protocol.KDF import PBKDF2
 
 
 users = Blueprint('users', __name__)
@@ -31,8 +31,10 @@ def register():
         return redirect(url_for('main.home'))
     registerForm = RegistrationForm()
     if registerForm.validate_on_submit():
-        hashed_password = bcrypt.generate_password_hash(registerForm.password.data).decode('utf-8')
-        ciphered_Uk, salt_Pk, iv_Uk = generate_keys(registerForm.password.data)
+        kdf = bcrypt.kdf(password=registerForm.password.data.encode(), salt=b'CR7BalonDeOro', desired_key_bytes=64, rounds=50)
+        salt_Pk = bcrypt.gensalt(rounds=12)
+        hashed_password = bcrypt.hashpw(base64.b64encode(kdf[:32]), salt_Pk)
+        ciphered_Uk, iv_Uk = generate_keys(kdf[32:])
         user = User(username = registerForm.username.data,
                     email = registerForm.email.data,
                     password = hashed_password,
@@ -41,11 +43,10 @@ def register():
                     iv_Uk = iv_Uk)
         db.session.add(user)
         db.session.commit()
-        current_app.logger.info('[IP: %s] [Message: El usuario %s se ha registrado]',request.headers['X-Real-Ip'], user.username)
-        #MIRAR QUE PASA SI HAY ERROR AL CREAR EL DISPOSITIVO
+        current_app.logger.info('[IP: %s] [Message: El usuario %s se ha registrado]',request.remote_addr, user.username)
         createDevice(user, request)
         current_app.logger.info('[User: %s] [Message: Ha añadido correctamente un dispositivo de confianza]', user.username)
-        #send_confirmation_email(user)
+        send_confirmation_email(user)
         current_app.logger.info('[User: %s] [Message: Ha recibido el correo de confirmacion]', user.username)
         flash(f'Your new account has been created! Please verify it within 30 minutes.', 'info')
         # redirect to the two-factor auth page, passing username in session
@@ -61,44 +62,43 @@ def login():
     loginForm = LoginForm()
     if loginForm.validate_on_submit():
         user = User.query.filter_by(username=loginForm.username.data).first()
-        if user and bcrypt.check_password_hash(user.password, loginForm.password.data):
-            #if user.confirmed:
-            if checkUserDevice(user, request):
-                login_user(user, remember=loginForm.remember.data)
-                next_page = request.args.get('next')
-                if next_page:
-                    flash(f'Welcome to Social Medium {user.username}', 'success')
-                    current_app.logger.info('[IP: %s] [Message: El usuario %s se ha logeado]',request.headers['X-Real-Ip'], user.username)
-                    Pk = PBKDF2(loginForm.password.data, user.salt_Pk, 32, 1000)[0:16]
-                    session['Pk'] = Pk
-                    return redirect(next_page)
+        kdf = bcrypt.kdf(password=loginForm.password.data.encode(), salt=b'CR7BalonDeOro', desired_key_bytes=64, rounds=50)
+        if user and bcrypt.checkpw(base64.b64encode(kdf[:32]), user.password):
+            if user.confirmed:
+                if checkUserDevice(user, request):
+                    login_user(user, remember=loginForm.remember.data)
+                    next_page = request.args.get('next')
+                    if next_page:
+                        flash(f'Welcome to Social Medium {user.username}', 'success')
+                        current_app.logger.info('[IP: %s] [Message: El usuario %s se ha logeado]',request.remote_addr, user.username)
+                        session['Pk'] = kdf[32:]
+                        return redirect(next_page)
+                    else:
+                        flash(f'Welcome to Social Medium {user.username}', 'success')
+                        current_app.logger.info('[IP: %s] [Message: El usuario %s se ha logeado]',request.remote_addr, user.username)
+                        session['Pk'] = kdf[32:]
+                        return redirect(url_for('main.home'))
                 else:
-                    flash(f'Welcome to Social Medium {user.username}', 'success')
-                    current_app.logger.info('[IP: %s] [Message: El usuario %s se ha logeado]',request.headers['X-Real-Ip'], user.username)
-                    Pk = PBKDF2(loginForm.password.data, user.salt_Pk, 32, 1000)[0:16]
-                    session['Pk'] = Pk
-                    return redirect(url_for('main.home'))
+                    session['username'] = user.username
+                    current_app.logger.info('[IP: %s] Intento de inicio de sesion desde un nuevo dispisitivo, pasamos a token de verifiacion con el usurio %s]', request.remote_addr,loginForm.username.data)
+                    return redirect(url_for('users.token',  remember=loginForm.remember.data))
             else:
-                session['username'] = user.username
-                current_app.logger.info('[IP: %s] Intento de inicio de sesion desde un nuevo dispisitivo, pasamos a token de verifiacion con el usurio %s]', request.headers['X-Real-Ip'],loginForm.username.data)
-                return redirect(url_for('users.token',  remember=loginForm.remember.data))
-            #else:
-            #    flash('Please verify your account via email', 'warning')
-            #    current_app.logger.info('[IP: %s] Intento de inicio de sesion sin cuenta validad por el usuario %s]', request.headers['X-Real-Ip'],loginForm.username.data)
+                flash('Please verify your account via email', 'warning')
+                current_app.logger.info('[IP: %s] Intento de inicio de sesion sin cuenta validad por el usuario %s]', request.remote_addr,loginForm.username.data)
         else:
             flash('Login Unsuccessful. Please try again', 'warning')
-            current_app.logger.warning('[IP: %s] [Message: Inicio de sesión fallido mediante el usuario %s]', request.headers['X-Real-Ip'], loginForm.username.data)
+            current_app.logger.warning('[IP: %s] [Message: Inicio de sesión fallido mediante el usuario %s]', request.remote_addr, loginForm.username.data)
     return render_template('login.html', title='Login', form=loginForm)
 
 
 @users.route("/token/<string:remember>", methods=['GET', 'POST'])
 def token(remember):
     if 'username' not in session:
-        current_app.logger.warning('[IP: %s] [Message: Ha intentado introducir el token de sesion directamente]', request.headers['X-Real-Ip'])
+        current_app.logger.warning('[IP: %s] [Message: Ha intentado introducir el token de sesion directamente]', request.remote_addr)
         abort(403)
     user = User.query.filter_by(username=session['username']).first()
     if user is None:
-        current_app.logger.warning('[IP: %s] [Message: Session de usuario no encontrada]', request.headers['X-Real-Ip'])
+        current_app.logger.warning('[IP: %s] [Message: Session de usuario no encontrada]', request.remote_addr)
         return redirect(url_for('main.home'))
     tokenform = TokenForm()
     if tokenform.validate_on_submit():
@@ -111,7 +111,7 @@ def token(remember):
                 flash(f'Welcome to Social Medium {user.username}', 'success')
             del session['username']
             login_user(user, remember=remember)
-            current_app.logger.info('[IP: %s] [Message: El usuario %s se ha logeado]',request.headers['X-Real-Ip'], user.username)
+            current_app.logger.info('[IP: %s] [Message: El usuario %s se ha logeado]',request.remote_addr, user.username)
             return redirect(url_for('main.home'))
         else:
             flash('Login Unsuccessful. Token failure', 'warning')
@@ -136,7 +136,7 @@ def account():
     accountForm = UpdateAccountForm()
     if accountForm.validate_on_submit():
         if accountForm.picture.data:#Si ha elegido una foto nueva
-            pictureFilename = save_picture(accountForm.picture.data)#Primero mediante esta funcion creada la guardamos
+            pictureFilename = save_picture(accountForm.picture.data, current_user.image_file, current_user.username)#Primero mediante esta funcion creada la guardamos
             current_user.image_file = pictureFilename#La asociamos en la base de datos
         current_user.username = accountForm.username.data
         current_user.email = accountForm.email.data
@@ -254,11 +254,11 @@ def reset_request():
         user = User.query.filter_by(username=resetForm.username.data).first()
         email = User.query.filter_by(email=resetForm.email.data).first()
         if user != email:
-            current_app.logger.warning('[IP: %s] [Message: Ha intentado resetear la contraseña de un usuario y correo que no coinciden %s]', request.headers['X-Real-Ip'])
+            current_app.logger.warning('[IP: %s] [Message: Ha intentado resetear la contraseña de un usuario y correo que no coinciden %s]', request.remote_addr)
             flash('That username does not belong to that email', 'danger')
             return redirect(url_for('main.home'))
         session['username'] = user.username
-        current_app.logger.info('[IP: %s] [Message: EL usuario va a proceder a las preguntas para reseteo de contraseña %s]', request.headers['X-Real-Ip'], user.username)
+        current_app.logger.info('[IP: %s] [Message: EL usuario va a proceder a las preguntas para reseteo de contraseña %s]', request.remote_addr, user.username)
         flash('Answer correctly the personal cuestions or the authentication code for a reset email', 'info')
         return redirect(url_for('users.challenge'))
     return render_template('reset_request.html', title='Reset Password', form=resetForm)
@@ -267,11 +267,11 @@ def reset_request():
 @users.route("/challenge", methods=['GET', 'POST'])
 def challenge():
     if 'username' not in session:
-        current_app.logger.warning('[IP: %s] [Message: Ha intentado hacer las preguntas saltandose un paso previo  %s]', request.headers['X-Real-Ip'])
+        current_app.logger.warning('[IP: %s] [Message: Ha intentado hacer las preguntas saltandose un paso previo  %s]', request.remote_addr)
         abort(403)
     user = User.query.filter_by(username=session['username']).first()
     if user is None:
-        current_app.logger.warning('[IP: %s] [Message: Session de usuario no encontrada %s]', request.headers['X-Real-Ip'])
+        current_app.logger.warning('[IP: %s] [Message: Session de usuario no encontrada %s]', request.remote_addr)
         return redirect(url_for('main.home'))
     challengeForm = ChallengeForm()
     if challengeForm.validate_on_submit():
@@ -279,7 +279,7 @@ def challenge():
             if ((int(challengeForm.personalPosts.data ) == int(Post.query.filter_by(post_type='1').filter_by(author=user).count())) \
                 and (user.registration_date.year == int(challengeForm.registrationYear.data)) \
                 and (user.registration_date.month == int(challengeForm.registrationMonth.data))):
-                    current_app.logger.info('[IP: %s] [Message: Ha respondido correctamente a las cuestiones personales del usuario %s]', request.headers['X-Real-Ip'], user.username)
+                    current_app.logger.info('[IP: %s] [Message: Ha respondido correctamente a las cuestiones personales del usuario %s]', request.remote_addr, user.username)
                     send_reset_email(user)
                     current_app.logger.info('[User: %s] [Message: Ha recibido el correo para cambiar su contraseña]', user.username)
                     del session['username']
@@ -287,7 +287,7 @@ def challenge():
                     return redirect(url_for('users.login'))
         if challengeForm.token.data:
             if user.verify_totp(challengeForm.token.data):
-                current_app.logger.info('[IP: %s] [Message: Ha introducido correctamente el token del usuario %s]', request.headers['X-Real-Ip'], user.username)
+                current_app.logger.info('[IP: %s] [Message: Ha introducido correctamente el token del usuario %s]', request.remote_addr, user.username)
                 send_reset_email(user)
                 current_app.logger.info('[User: %s] [Message: Ha recibido el correo para cambiar su contraseña]', user.username)
                 del session['username']
@@ -307,13 +307,15 @@ def reset_token(token):
         return redirect(url_for('main.home'))
     user = User.verify_reset_token(token)
     if user is None:
-        current_app.logger.warning('[IP: %s] [Message: Token caducado o incorrecto para el reseteo de contraseña %s]', request.headers['X-Real-Ip'])
+        current_app.logger.warning('[IP: %s] [Message: Token caducado o incorrecto para el reseteo de contraseña %s]', request.remote_addr)
         flash('That is an invalid or expired token', 'danger')
         return redirect(url_for('users.reset_request'))
     passwordResetform = ResetPasswordForm()
     if passwordResetform.validate_on_submit():
-        hashed_password = bcrypt.generate_password_hash(passwordResetform.password.data).decode('utf-8')
-        ciphered_Uk, salt_Pk, iv_Uk = generate_keys(passwordResetform.password.data)
+        kdf = bcrypt.kdf(password=passwordResetform.password.data.encode(), salt=b'CR7BalonDeOro', desired_key_bytes=64, rounds=50)
+        salt_Pk = bcrypt.gensalt(rounds=12)
+        hashed_password = bcrypt.hashpw(base64.b64encode(kdf[:32]), salt_Pk)
+        ciphered_Uk, iv_Uk = generate_keys(kdf[32:])
         user.password = hashed_password
         user.ciphered_Uk = ciphered_Uk
         user.salt_Pk = salt_Pk
@@ -335,7 +337,7 @@ def account_activation(token):
     user = User.verify_reset_token(token)
     if user is None:
         flash('That is an invalid or expired token', 'danger')
-        current_app.logger.warning('[IP: %s] [Message: Token caducado o incorrecto para la activación de la cuenta %s]', request.headers['X-Real-Ip'])
+        current_app.logger.warning('[IP: %s] [Message: Token caducado o incorrecto para la activación de la cuenta %s]', request.remote_addr)
         return redirect(url_for('users.login'))
     else:
         user.confirmed = True
@@ -366,11 +368,11 @@ def delete_user(username):
 @users.route('/qrcode')
 def qrcode():
     if 'username' not in session:
-        current_app.logger.warning('[IP: %s] [Message: Ha intentado acceder directamente al qrcode %s]', request.headers['X-Real-Ip'])
+        current_app.logger.warning('[IP: %s] [Message: Ha intentado acceder directamente al qrcode %s]', request.remote_addr)
         abort(404)
     user = User.query.filter_by(username=session['username']).first()
     if user is None:
-        current_app.logger.warning('[IP: %s] [Message: Usuario inexistente %s]', request.headers['X-Real-Ip'])
+        current_app.logger.warning('[IP: %s] [Message: Usuario inexistente %s]', request.remote_addr)
         abort(404)
 
     # for added security, remove username from session
@@ -389,11 +391,11 @@ def qrcode():
 @users.route('/twofactor')
 def two_factor_setup():
     if 'username' not in session:
-        current_app.logger.warning('[IP: %s] [Message: Ha intentado acceder directamente al twofactor %s]', request.headers['X-Real-Ip'])
+        current_app.logger.warning('[IP: %s] [Message: Ha intentado acceder directamente al twofactor %s]', request.remote_addr)
         return redirect(url_for('main.home'))
     user = User.query.filter_by(username=session['username']).first()
     if user is None:
-        current_app.logger.warning('[IP: %s] [Message: Usuario inexistente %s]', request.headers['X-Real-Ip'])
+        current_app.logger.warning('[IP: %s] [Message: Usuario inexistente %s]', request.remote_addr)
         return redirect(url_for('main.home'))
     # since this page contains the sensitive qrcode, make sure the browser
     # does not cache it
